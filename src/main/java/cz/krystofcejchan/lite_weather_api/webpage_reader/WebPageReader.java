@@ -1,4 +1,4 @@
-package unseenlogic.webpage_reader;
+package cz.krystofcejchan.lite_weather_api.webpage_reader;
 
 import java.io.IOException;
 import java.net.URL;

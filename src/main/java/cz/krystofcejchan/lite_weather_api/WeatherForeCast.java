@@ -1,3 +1,5 @@
+package cz.krystofcejchan.lite_weather_api;
+
 public class WeatherForeCast {
 
     private final String location;

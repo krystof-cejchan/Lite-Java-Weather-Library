@@ -1,4 +1,8 @@
-import unseenlogic.webpage_reader.WebPageReader;
+package cz.krystofcejchan.lite_weather_api;
+
+import cz.krystofcejchan.lite_weather_api.webpage_reader.WebPageReader;
+
+import java.io.IOException;
 
 public class WeatherAsJSON extends WeatherForeCast implements WeatherForecasterFormat {
 
@@ -7,7 +11,6 @@ public class WeatherAsJSON extends WeatherForeCast implements WeatherForecasterF
     public WeatherAsJSON(String location) {
         super(location);
         this.JsonAsText = WebPageReader.getTextFromWebpage("https://wttr.in/" + location + "?format=j1");
-
     }
 
     public String getJsonAsText() {
@@ -15,7 +18,7 @@ public class WeatherAsJSON extends WeatherForeCast implements WeatherForecasterF
     }
 
     @Override
-    public String getOutput() {
+    public Object getOutput(String location){
         return getJsonAsText();
     }
 
