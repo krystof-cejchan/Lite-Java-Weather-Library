@@ -14,7 +14,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 
-public class Tomorrow implements IForecastDayTimesAndDays {
+public final class Tomorrow implements IForecastDayTimesAndDays {
+    /**
+     * {@link TIME}s <br>
+     * times provided to the constructor<br> <b>duplicate items will be eventually removed -there will be unique TIMEs in the array</b>
+     */
     private final TIME[] times;
 
     final private int moonIllumination;
@@ -41,7 +45,7 @@ public class Tomorrow implements IForecastDayTimesAndDays {
                 return new Tomorrow(getLocation(), getTimes(), getDays());
             }
         }.getJson();
-        JSONObject daily =json.getJSONArray("weather").getJSONObject(0).getJSONArray("astronomy").getJSONObject(0);
+        JSONObject daily = json.getJSONArray("weather").getJSONObject(0).getJSONArray("astronomy").getJSONObject(0);
         moonIllumination = daily.getInt("moon_illumination");
         moonPhase = daily.getString("moon_phase");
         moonRise = UtilityClass.stringToLocalTime(new StringBuilder(daily.getString("moonrise")));
@@ -65,6 +69,7 @@ public class Tomorrow implements IForecastDayTimesAndDays {
             IForecastDayTimesAndDays.super.addHour(new ForecastAtHour(json, getDay(), t),
                     UtilityClass.listOfAllDaysAndItsTimes);
         }
+        System.gc();
     }
 
     @Override
@@ -152,25 +157,24 @@ public class Tomorrow implements IForecastDayTimesAndDays {
 
     @Override
     public String toString() {
-        return "Tomorrow{" +
-                "times=" + Arrays.toString(times) +
-                ", moonIllumination=" + moonIllumination +
-                ", moonPhase='" + moonPhase + '\'' +
-                ", moonRise=" + moonRise +
-                ", moonSet=" + moonSet +
-                ", sunSet=" + sunSet +
-                ", sunRise=" + sunRise +
-                ", averageTemperatureC=" + averageTemperatureC +
-                ", averageTemperatureF=" + averageTemperatureF +
-                ", date=" + date +
-                ", maxTemperatureC=" + maxTemperatureC +
-                ", maxTemperatureF=" + maxTemperatureF +
-                ", minTemperatureC=" + minTemperatureC +
-                ", minTemperatureF=" + minTemperatureF +
-                ", sunHour=" + sunHour +
-                ", totalSnowCM=" + totalSnowCM +
-                ", totalSnowInches=" + totalSnowInches +
-                ", uvIndex=" + uvIndex +
-                '}';
+        return "---Tomorrow---" +
+                "\ntimes=" + Arrays.toString(times) +
+                "\nmoonIllumination=" + moonIllumination +
+                "\nmoonPhase='" + moonPhase + '\'' +
+                "\nmoonRise=" + moonRise +
+                "\nmoonSet=" + moonSet +
+                "\nsunSet=" + sunSet +
+                "\nsunRise=" + sunRise +
+                "\naverageTemperatureC=" + averageTemperatureC +
+                "\naverageTemperatureF=" + averageTemperatureF +
+                "\ndate=" + date +
+                "\nmaxTemperatureC=" + maxTemperatureC +
+                "\nmaxTemperatureF=" + maxTemperatureF +
+                "\nminTemperatureC=" + minTemperatureC +
+                "\nminTemperatureF=" + minTemperatureF +
+                "\nsunHour=" + sunHour +
+                "\ntotalSnowCM=" + totalSnowCM +
+                "\ntotalSnowInches=" + totalSnowInches +
+                "\nuvIndex=" + uvIndex;
     }
 }

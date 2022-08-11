@@ -4,7 +4,6 @@ import cz.krystofcejchan.lite_weather_api.UtilityClass;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
-import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.WeatherForecast;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 
-public class TomorrowAfter extends WeatherForecast implements IForecastDayTimesAndDays {
+public final class AfterTomorrow implements IForecastDayTimesAndDays {
 
     final private int moonIllumination;
     final private String moonPhase;
@@ -30,17 +29,21 @@ public class TomorrowAfter extends WeatherForecast implements IForecastDayTimesA
     final private double sunHour;
     final private double totalSnowCM, totalSnowInches;
     final private int uvIndex;
+    /**
+     * {@link TIME}s <br>
+     * times provided to the constructor<br> <b>duplicate items will be eventually removed -there will be unique TIMEs in the array</b>
+     */
     final private TIME[] times;
 
-    public TomorrowAfter(String location, TIME[] times, DAY... days) throws IOException {
-        super(location, times, days);
+    public AfterTomorrow(String location, TIME[] times, DAY... days) throws IOException {
         this.times = times;
-        JSONObject daily = new WeatherObject<TomorrowAfter>(location, times, days) {
+        JSONObject jsonObject = new WeatherObject<AfterTomorrow>(location, times, days) {
             @Override
-            public @NotNull TomorrowAfter getObject() throws IOException {
-                return new TomorrowAfter(getLocation(), getTimes(), getDays());
+            public @NotNull AfterTomorrow getObject() throws IOException {
+                return new AfterTomorrow(getLocation(), getTimes(), getDays());
             }
-        }.getJson().getJSONArray("weather").getJSONObject(0).getJSONArray("astronomy")
+        }.getJson();
+        JSONObject daily = jsonObject.getJSONArray("weather").getJSONObject(0).getJSONArray("astronomy")
                 .getJSONObject(0);
         moonIllumination = daily.getInt("moon_illumination");
         moonPhase = daily.getString("moon_phase");
@@ -48,7 +51,7 @@ public class TomorrowAfter extends WeatherForecast implements IForecastDayTimesA
         moonSet = UtilityClass.stringToLocalTime(new StringBuilder(daily.getString("moonset")));
         sunRise = UtilityClass.stringToLocalTime(new StringBuilder(daily.getString("sunrise")));
         sunSet = UtilityClass.stringToLocalTime(new StringBuilder(daily.getString("sunset")));
-        daily = super.getJson().getJSONArray("weather").getJSONObject(0);
+        daily = jsonObject.getJSONArray("weather").getJSONObject(0);
         averageTemperatureC = daily.getInt("avgtempC");
         averageTemperatureF = daily.getInt("avgtempF");
         date = UtilityClass.stringToDate(new StringBuilder(daily.getString("date")));
@@ -62,14 +65,15 @@ public class TomorrowAfter extends WeatherForecast implements IForecastDayTimesA
         uvIndex = daily.getInt("uvIndex");
 
         for (TIME t : times) {
-            IForecastDayTimesAndDays.super.addHour(new ForecastAtHour(super.getJson(), getDay(), t),
+            IForecastDayTimesAndDays.super.addHour(new ForecastAtHour(jsonObject, getDay(), t),
                     UtilityClass.listOfAllDaysAndItsTimes);
         }
+        System.gc();
     }
 
     @Override
     public DAY getDay() {
-        return DAY.AFTERTOMORROW;
+        return DAY.AFTER_TOMORROW;
     }
 
     @Override
@@ -152,25 +156,24 @@ public class TomorrowAfter extends WeatherForecast implements IForecastDayTimesA
 
     @Override
     public String toString() {
-        return "TomorrowAfter{" +
-                "moonIllumination=" + moonIllumination +
-                ", moonPhase='" + moonPhase + '\'' +
-                ", moonRise=" + moonRise +
-                ", moonSet=" + moonSet +
-                ", sunSet=" + sunSet +
-                ", sunRise=" + sunRise +
-                ", averageTemperatureC=" + averageTemperatureC +
-                ", averageTemperatureF=" + averageTemperatureF +
-                ", date=" + date +
-                ", maxTemperatureC=" + maxTemperatureC +
-                ", maxTemperatureF=" + maxTemperatureF +
-                ", minTemperatureC=" + minTemperatureC +
-                ", minTemperatureF=" + minTemperatureF +
-                ", sunHour=" + sunHour +
-                ", totalSnowCM=" + totalSnowCM +
-                ", totalSnowInches=" + totalSnowInches +
-                ", uvIndex=" + uvIndex +
-                ", times=" + Arrays.toString(times) +
-                '}';
+        return "---AfterTomorrow---" +
+                "\ntimes=" + Arrays.toString(times) +
+                "\noonIllumination=" + moonIllumination +
+                "\nmoonPhase='" + moonPhase + '\'' +
+                "\nmoonRise=" + moonRise +
+                "\nmoonSet=" + moonSet +
+                "\nsunSet=" + sunSet +
+                "\nsunRise=" + sunRise +
+                "\naverageTemperatureC=" + averageTemperatureC +
+                "\naverageTemperatureF=" + averageTemperatureF +
+                "\ndate=" + date +
+                "\nmaxTemperatureC=" + maxTemperatureC +
+                "\nmaxTemperatureF=" + maxTemperatureF +
+                "\nminTemperatureC=" + minTemperatureC +
+                "\nminTemperatureF=" + minTemperatureF +
+                "\nsunHour=" + sunHour +
+                "\ntotalSnowCM=" + totalSnowCM +
+                "\ntotalSnowInches=" + totalSnowInches +
+                "\nuvIndex=" + uvIndex;
     }
 }

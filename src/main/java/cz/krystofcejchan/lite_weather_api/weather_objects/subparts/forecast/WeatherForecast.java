@@ -4,18 +4,18 @@ import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_api.enums_exception.exceptions.NoDataFoundForThisDay;
 import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
+import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.AfterTomorrow;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.Today;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.Tomorrow;
-import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.TomorrowAfter;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Weather forecast for today, tomorrow, the day after tomorrow <br>
@@ -25,7 +25,7 @@ import java.util.List;
 public class WeatherForecast extends WeatherObject<WeatherForecast> {
     private final Today today;
     private final Tomorrow tomorrow;
-    private final TomorrowAfter tomorrowAfter;
+    private final AfterTomorrow tomorrowAfter;
 
 
     public WeatherForecast(String location, TIME[] times, DAY... days) throws IOException {
@@ -33,27 +33,26 @@ public class WeatherForecast extends WeatherObject<WeatherForecast> {
 
         Today todayHelper = null;
         Tomorrow tomorrowHelper = null;
-        TomorrowAfter tomorrowAfterHelper = null;
+        AfterTomorrow tomorrowAfterHelper = null;
 
         //filtering the arraylists
-        List<TIME> timeList = new ArrayList<>(Arrays.stream(times).distinct().toList());
-        List<DAY> dayList = new ArrayList<>(Arrays.stream(days).distinct().toList());
+        List<TIME> timeList = new ArrayList<>(Arrays.stream(times).toList()).stream().distinct().collect(Collectors.toList());
+        List<DAY> dayList = new ArrayList<>(Arrays.stream(days).toList()).stream().distinct().collect(Collectors.toList());
         if (dayList.contains(DAY.ALL))
             dayList = dayList.stream().filter(it -> it == DAY.ALL).toList();
         if (timeList.contains(TIME.ALL))
             timeList = timeList.stream().filter(it -> it == TIME.ALL).toList();
 
-        JSONObject weather_forecast = super.getJson().getJSONArray("weather").getJSONObject(0);
         TIME[] timesBackToArray = timeList.toArray(new TIME[0]);
         for (DAY day : dayList) {
             switch (day) {
                 case TODAY -> todayHelper = new Today(location, timesBackToArray, days);
                 case TOMORROW -> tomorrowHelper = new Tomorrow(location, timesBackToArray, days);
-                case AFTERTOMORROW -> tomorrowAfterHelper = new TomorrowAfter(location, timesBackToArray, days);
+                case AFTER_TOMORROW -> tomorrowAfterHelper = new AfterTomorrow(location, timesBackToArray, days);
                 case ALL -> {
-                    todayHelper = new Today(location, timesBackToArray, days);
-                    tomorrowHelper = new Tomorrow(location, timesBackToArray, days);
-                    tomorrowAfterHelper = new TomorrowAfter(location, timesBackToArray, days);
+                    todayHelper = new Today(location, timesBackToArray, DAY.TODAY);
+                    tomorrowHelper = new Tomorrow(location, timesBackToArray, DAY.TOMORROW);
+                    tomorrowAfterHelper = new AfterTomorrow(location, timesBackToArray, DAY.AFTER_TOMORROW);
                 }
             }
         }
@@ -83,7 +82,7 @@ public class WeatherForecast extends WeatherObject<WeatherForecast> {
         return tomorrow;
     }
 
-    public TomorrowAfter getTomorrowAfter() {
+    public AfterTomorrow getTomorrowAfter() {
         if (tomorrowAfter == null)
             throw new NoDataFoundForThisDay("The day after tomorrow was not included in the constructor");
 
@@ -97,10 +96,9 @@ public class WeatherForecast extends WeatherObject<WeatherForecast> {
 
     @Override
     public String toString() {
-        return "WeatherForecast{" +
-                "today=" + today.toString() +
-                ", tomorrow=" + tomorrow.toString() +
-                ", tomorrowAfter=" + tomorrowAfter.toString() +
-                '}';
+        return "---  WeatherForecast  ---" +
+                "\n--today=\n" + (today == null ? " null " : today.toString()) +
+                "\n--tomorrow=\n" + (tomorrow == null ? " null " : tomorrow.toString()) +
+                "\n--AfterTomorrow=\n" + (tomorrowAfter == null ? " null " : tomorrowAfter.toString());
     }
 }
