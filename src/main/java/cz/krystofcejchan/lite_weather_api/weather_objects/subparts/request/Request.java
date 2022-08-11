@@ -1,7 +1,7 @@
-package cz.krystofcejchan.lite_weather_api.weather_objects.subparts;
+package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.request;
 
-import cz.krystofcejchan.lite_weather_api.enums.DAY;
-import cz.krystofcejchan.lite_weather_api.enums.TIME;
+import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
+import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;

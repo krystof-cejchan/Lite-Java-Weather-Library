@@ -1,7 +1,8 @@
-package cz.krystofcejchan.lite_weather_api.weather_objects.subparts;
+package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.current_weather;
 
-import cz.krystofcejchan.lite_weather_api.enums.DAY;
-import cz.krystofcejchan.lite_weather_api.enums.TIME;
+import cz.krystofcejchan.lite_weather_api.UtilityClass;
+import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
+import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
 
-import static cz.krystofcejchan.lite_weather_api.enums.TIME.ALL;
+import static cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME.ALL;
 
 /**
  * Current weather / the latest weather data
@@ -73,40 +74,12 @@ public final class CurrentCondition extends WeatherObject<CurrentCondition> {
 
         //calculating date and time
         StringBuilder locObsDateT = new StringBuilder(current_condition.getString("localObsDateTime").trim().toUpperCase(Locale.ROOT));
-        int[] year_month_day = new int[3];
-        int[] hour_minutes = new int[2];
-        for (int i = 0; i < year_month_day.length; i++) {
-            year_month_day[i] = Integer.parseInt((locObsDateT.substring(0, locObsDateT.indexOf(year_month_day.length - 1 == i ? " " : "-"))));
-            locObsDateT.replace(0, locObsDateT.indexOf(year_month_day.length - 1 == i ? " " : "-") + 1, "");
-        }
-
-        boolean pm = locObsDateT.toString().contains("PM");
-        for (int i = 0; i < hour_minutes.length; i++) {
-            hour_minutes[i] = Integer.parseInt((locObsDateT.substring(0, locObsDateT.indexOf(hour_minutes.length - 1 == i ? " " : ":"))));
-            locObsDateT.replace(0, locObsDateT.indexOf(hour_minutes.length - 1 == i ? " " : ":") + 1, "");
-        }
-        if (pm && hour_minutes[0] != 12)
-            hour_minutes[0] += 12;
-
-        localObsDateTime = LocalDateTime.of(
-                year_month_day[0],
-                year_month_day[1],
-                year_month_day[2],
-                hour_minutes[0],
-                hour_minutes[1]);
-
-
         StringBuilder obsT = new StringBuilder(current_condition.getString("observation_time")
                 .trim()
                 .toUpperCase(Locale.ROOT));
-        pm = obsT.toString().contains("PM");
 
-        for (int i = 0; i < hour_minutes.length; i++) {
-            hour_minutes[i] = Integer.parseInt((obsT.substring(0, obsT.indexOf(hour_minutes.length - 1 == i ? " " : ":"))));
-            obsT.replace(0, obsT.indexOf(hour_minutes.length - 1 == i ? " " : ":") + 1, "");
-        }
-        if (pm && hour_minutes[0] != 12)
-            hour_minutes[0] += 12;
+        localObsDateTime = UtilityClass.stringToDateTime(locObsDateT);
+
         // -----  ------------ ----------- -------------
 
         //class fields
@@ -114,7 +87,7 @@ public final class CurrentCondition extends WeatherObject<CurrentCondition> {
         feelsLikeF = current_condition.getInt("FeelsLikeF");
         cloudCover = current_condition.getInt("cloudcover");
         humidity = current_condition.getInt("humidity");
-        observationTime = LocalTime.of(hour_minutes[0], hour_minutes[1]);
+        observationTime = UtilityClass.stringToLocalTime(obsT);
         precipInches = current_condition.getDouble("precipInches");
         precipMM = current_condition.getDouble("precipMM");
         pressure = current_condition.getInt("pressure");
@@ -181,70 +154,145 @@ public final class CurrentCondition extends WeatherObject<CurrentCondition> {
         return humidity;
     }
 
+    /**
+     * @return Local date and time {@link LocalDateTime} at the provided location
+     */
     public LocalDateTime getLocalObsDateTime() {
         return localObsDateTime;
     }
 
+    /**
+     * @return Local time {@link LocalTime} of the observation
+     */
     public LocalTime getObservationTime() {
         return observationTime;
     }
 
+    /**
+     * Precipitation is any liquid or frozen water that forms in the atmosphere and falls to the Earth.<br>
+     * It is one of the three main steps of the global water cycle.<br><br>
+     * * <a href="https://education.nationalgeographic.org/resource/precipitation"><i>source</i></a>
+     *
+     * @return precipitation in inches
+     */
     public double getPrecipInches() {
         return precipInches;
     }
+
+    /**
+     * Precipitation is any liquid or frozen water that forms in the atmosphere and falls to the Earth.<br>
+     * It is one of the three main steps of the global water cycle.<br><br>
+     * * <a href="https://education.nationalgeographic.org/resource/precipitation"><i>source</i></a>
+     *
+     * @return precipitation in millimeters
+     */
 
     public double getPrecipMM() {
         return precipMM;
     }
 
+    /**
+     * The air around you has weight, and it presses against everything it touches. That pressure is called atmospheric pressure, or air pressure.
+     * <br><br>
+     * <a href="https://education.nationalgeographic.org/resource/atmospheric-pressure"><i>source</i></a>
+     *
+     * @return Atmospheric Pressure in Millibars
+     */
     public int getPressure() {
         return pressure;
     }
 
+    /**
+     * The air around you has weight, and it presses against everything it touches. That pressure is called atmospheric pressure, or air pressure.
+     * <br><br>
+     * <a href="https://education.nationalgeographic.org/resource/atmospheric-pressure"><i>source</i></a>
+     *
+     * @return Atmospheric Pressure in inches
+     */
     public int getPressureInches() {
         return pressureInches;
     }
+
+    /**
+     * @return current temperature in Celsius
+     */
 
     public int getTemp_C() {
         return temp_C;
     }
 
+    /**
+     * @return current temperature in Fahrenheit
+     */
     public int getTemp_F() {
         return temp_F;
     }
 
+    /**
+     * <a href="https://www.who.int/news-room/questions-and-answers/item/radiation-the-ultraviolet-(uv)-index"><i>for more info see this</i></a>
+     *
+     * @return UV index
+     */
     public int getUvIndex() {
         return uvIndex;
     }
 
+    /**
+     * @return how far can you see in kilometers
+     */
     public int getVisibility() {
         return visibility;
     }
 
+    /**
+     * @return how far can you see in miles
+     */
     public int getVisibilityMiles() {
         return visibilityMiles;
     }
 
+    /**
+     * @return weather code
+     */
     public int getWeatherCode() {
         return weatherCode;
     }
 
+    /**
+     * examples: <b>Cloudy, Sunny, Snowy, Heavy Rainstorm</b>...
+     *
+     * @return weather description
+     */
     public String getWeatherDescription() {
         return weatherDescription;
     }
 
+    /**
+     * examples: <b>west, south, south-east</b>...
+     *
+     * @return direction of wind
+     */
     public String getWindDir16Point() {
         return windDir16Point;
     }
 
+    /**
+     * @return wind direction degree
+     */
     public int getWinDirDegree() {
         return winDirDegree;
     }
 
+    /**
+     * @return wind speed in kilometers per hour
+     */
     public int getWindSpeedKmph() {
         return windSpeedKmph;
     }
 
+    /**
+     * @return wind speed in miles per hour
+     */
     public int getWindSpeedMiles() {
         return windSpeedMiles;
     }
@@ -276,6 +324,10 @@ public final class CurrentCondition extends WeatherObject<CurrentCondition> {
                 "\n---";
     }
 
+    /**
+     * @return instance of the object
+     * @throws IOException if data fails to show up
+     */
     @Override
     public @NotNull CurrentCondition getObject() throws IOException {
         return new CurrentCondition(super.getLocation());

@@ -2,9 +2,7 @@ package cz.krystofcejchan.lite_weather_api;
 
 import cz.krystofcejchan.lite_weather_api.webpage_reader.WebPageReader;
 
-import java.io.IOException;
-
-public class WeatherAsJSON extends WeatherForeCast implements WeatherForecasterFormat {
+public class WeatherAsJSON extends WeatherForeCast implements WeatherForecasterFormat<String> {
 
     private String JsonAsText = "";
 
@@ -18,7 +16,7 @@ public class WeatherAsJSON extends WeatherForeCast implements WeatherForecasterF
     }
 
     @Override
-    public Object getOutput(String location){
+    public String getOutput(String location) {
         return getJsonAsText();
     }
 

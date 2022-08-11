@@ -1,6 +1,4 @@
-package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.objects_helpers;
-
-import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.NearestArea;
+package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.nearest_area.helpers;
 
 import java.io.IOException;
 

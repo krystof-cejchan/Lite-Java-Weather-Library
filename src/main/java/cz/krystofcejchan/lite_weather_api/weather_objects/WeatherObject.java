@@ -1,8 +1,8 @@
 package cz.krystofcejchan.lite_weather_api.weather_objects;
 
 import cz.krystofcejchan.lite_weather_api.WeatherForeCast;
-import cz.krystofcejchan.lite_weather_api.enums.DAY;
-import cz.krystofcejchan.lite_weather_api.enums.TIME;
+import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
+import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -32,10 +32,6 @@ public abstract class WeatherObject<T> extends WeatherForeCast {
         this.location = super.getLocation();
         this.days = days;
         this.times = times;
-      /*  currentCondition = new CurrentCondition(location, times, days);
-        nearestArea = new NearestArea(location, times, days);
-        request = new Request(location, times, days);
-        weather = new WeatherForecast(location, times, days);*/
     }
 
     public DAY[] getDays() {
@@ -51,22 +47,6 @@ public abstract class WeatherObject<T> extends WeatherForeCast {
         return location;
     }
 
-    /* public CurrentCondition getCurrentCondition() {
-         return currentCondition;
-     }
-
-     public NearestArea getNearestArea() {
-         return nearestArea;
-     }
-
-     public Request getRequest() {
-         return request;
-     }
-
-     public WeatherForecast getWeather() {
-         return weather;
-     }
- */
     public String getJsonUrl() {
         return jsonUrl;
     }

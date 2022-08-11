@@ -6,8 +6,6 @@ public interface WeatherForecasterFormat<T> {
 
     T getOutput(String location) throws IOException;
 
-
-
     String getLocation();
 
 }
