@@ -3,13 +3,11 @@ package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_api.enums_exception.exceptions.NoDataFoundForThisDay;
-import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.AfterTomorrow;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.Today;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.Tomorrow;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,14 +20,13 @@ import java.util.stream.Collectors;
  * Data can be separated into hours → 12am, 3am, 6am, 9am, 12pm, 3pm, 6pm, 9pm.<br>
  * see {@link TIME}, {@link DAY}<br>
  */
-public class WeatherForecast extends WeatherObject<WeatherForecast> {
+public class WeatherForecast {
     private final Today today;
     private final Tomorrow tomorrow;
     private final AfterTomorrow tomorrowAfter;
 
 
     public WeatherForecast(String location, TIME[] times, DAY... days) throws IOException {
-        super(location, times, days);
 
         Today todayHelper = null;
         Tomorrow tomorrowHelper = null;
@@ -46,13 +43,13 @@ public class WeatherForecast extends WeatherObject<WeatherForecast> {
         TIME[] timesBackToArray = timeList.toArray(new TIME[0]);
         for (DAY day : dayList) {
             switch (day) {
-                case TODAY -> todayHelper = new Today(location, timesBackToArray, days);
-                case TOMORROW -> tomorrowHelper = new Tomorrow(location, timesBackToArray, days);
-                case AFTER_TOMORROW -> tomorrowAfterHelper = new AfterTomorrow(location, timesBackToArray, days);
+                case TODAY -> todayHelper = new Today(location, timesBackToArray);
+                case TOMORROW -> tomorrowHelper = new Tomorrow(location, timesBackToArray);
+                case AFTER_TOMORROW -> tomorrowAfterHelper = new AfterTomorrow(location, timesBackToArray);
                 case ALL -> {
-                    todayHelper = new Today(location, timesBackToArray, DAY.TODAY);
-                    tomorrowHelper = new Tomorrow(location, timesBackToArray, DAY.TOMORROW);
-                    tomorrowAfterHelper = new AfterTomorrow(location, timesBackToArray, DAY.AFTER_TOMORROW);
+                    todayHelper = new Today(location, timesBackToArray);
+                    tomorrowHelper = new Tomorrow(location, timesBackToArray);
+                    tomorrowAfterHelper = new AfterTomorrow(location, timesBackToArray);
                 }
             }
         }
@@ -87,11 +84,6 @@ public class WeatherForecast extends WeatherObject<WeatherForecast> {
             throw new NoDataFoundForThisDay("The day after tomorrow was not included in the constructor");
 
         return tomorrowAfter;
-    }
-
-    @Override
-    public @NotNull WeatherForecast getObject() throws IOException {
-        return new WeatherForecast(super.getLocation(), super.getTimes(), super.getDays());
     }
 
     @Override

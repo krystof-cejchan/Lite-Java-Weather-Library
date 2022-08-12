@@ -39,14 +39,9 @@ public final class Today implements IForecastDayTimesAndDays {
      */
     private final TIME[] times;
 
-    public Today(String location, TIME[] times, DAY... days) throws IOException {
+    public Today(String location, TIME... times) throws IOException {
         this.times = times;
-        JSONObject jsonObject = new WeatherObject<Today>(location, times, days) {
-            @Override
-            public @NotNull Today getObject() throws IOException {
-                return new Today(getLocation(), getTimes(), getDays());
-            }
-        }.getJson();
+        JSONObject jsonObject = UtilityClass.getJson(location);
         JSONObject daily = jsonObject.getJSONArray("weather").getJSONObject(0).getJSONArray("astronomy")
                 .getJSONObject(0);
         moonIllumination = daily.getInt("moon_illumination");

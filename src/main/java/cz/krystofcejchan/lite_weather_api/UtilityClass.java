@@ -2,7 +2,12 @@ package cz.krystofcejchan.lite_weather_api;
 
 import cz.krystofcejchan.lite_weather_api.enums_exception.exceptions.CannotCreateInstance;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtilityClass {
+
     public static List<ForecastAtHour> listOfAllDaysAndItsTimes = new ArrayList<>();
 
     private UtilityClass() {
@@ -61,5 +67,10 @@ public class UtilityClass {
             date.replace(0, year_month_day.length - 1 == i ? date.length() : date.indexOf("-") + 1, "");
         }
         return LocalDate.of(year_month_day[0], year_month_day[1], year_month_day[2]);
+    }
+
+
+    public static JSONObject getJson(String location) throws IOException {
+        return new JSONObject(IOUtils.toString(new URL("https://wttr.in/" + location + "?format=j1"), StandardCharsets.UTF_8));
     }
 }

@@ -3,10 +3,8 @@ package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.day
 import cz.krystofcejchan.lite_weather_api.UtilityClass;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
-import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -35,16 +33,10 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
     final private double totalSnowCM, totalSnowInches;
     final private int uvIndex;
 
-    public Tomorrow(String location, TIME[] times, DAY... days) throws IOException {
-        //  super(location, times, days);
+    public Tomorrow(String location, TIME... times) throws IOException {
         this.times = times;
 
-        JSONObject json = new WeatherObject<Tomorrow>(location, times, days) {
-            @Override
-            public @NotNull Tomorrow getObject() throws IOException {
-                return new Tomorrow(getLocation(), getTimes(), getDays());
-            }
-        }.getJson();
+        JSONObject json = UtilityClass.getJson(location);
         JSONObject daily = json.getJSONArray("weather").getJSONObject(0).getJSONArray("astronomy").getJSONObject(0);
         moonIllumination = daily.getInt("moon_illumination");
         moonPhase = daily.getString("moon_phase");
@@ -65,7 +57,7 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
         totalSnowInches = totalSnowCM / 2.54;
         uvIndex = daily.getInt("uvIndex");
 
-        for (TIME t : times) {
+        for (TIME t : this.times) {
             IForecastDayTimesAndDays.super.addHour(new ForecastAtHour(json, getDay(), t),
                     UtilityClass.listOfAllDaysAndItsTimes);
         }

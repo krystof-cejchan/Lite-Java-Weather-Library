@@ -1,10 +1,6 @@
 package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.current_weather;
 
 import cz.krystofcejchan.lite_weather_api.UtilityClass;
-import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
-import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
-import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -12,12 +8,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Locale;
 
-import static cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME.ALL;
-
 /**
  * Current weather / the latest weather data
  */
-public final class CurrentCondition extends WeatherObject<CurrentCondition> {
+public final class CurrentCondition {
 
     private final int feelsLikeC;
     private final int feelsLikeF;
@@ -66,10 +60,10 @@ public final class CurrentCondition extends WeatherObject<CurrentCondition> {
      * @throws IOException if data are unavailable
      */
     public CurrentCondition(String location) throws IOException {
-        super(location, new TIME[]{ALL}, DAY.ALL);
+        //super(location, new TIME[]{ALL}, DAY.ALL);
 
         //main json object for current condition
-        JSONObject current_condition = super.getJson().getJSONArray("current_condition").getJSONObject(0);
+        JSONObject current_condition = UtilityClass.getJson(location).getJSONArray("current_condition").getJSONObject(0);
 
 
         //calculating date and time
@@ -322,14 +316,5 @@ public final class CurrentCondition extends WeatherObject<CurrentCondition> {
                 "\nwindSpeedKmph=" + windSpeedKmph +
                 "\nwindSpeedMiles=" + windSpeedMiles +
                 "\n---";
-    }
-
-    /**
-     * @return instance of the object
-     * @throws IOException if data fails to show up
-     */
-    @Override
-    public @NotNull CurrentCondition getObject() throws IOException {
-        return new CurrentCondition(super.getLocation());
     }
 }

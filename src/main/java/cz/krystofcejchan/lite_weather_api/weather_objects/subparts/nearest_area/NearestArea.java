@@ -1,10 +1,7 @@
 package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.nearest_area;
 
-import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
-import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
-import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
+import cz.krystofcejchan.lite_weather_api.UtilityClass;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.nearest_area.helpers.AreaInfo;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -12,13 +9,12 @@ import java.io.IOException;
 /**
  * Information about the area where the weather measurement was performed
  */
-public final class NearestArea extends WeatherObject<NearestArea> {
+public final class NearestArea {
     private final String country;
     private final AreaInfo areaInfo;
 
     public NearestArea(String location) throws IOException {
-        super(location, new TIME[]{TIME.ALL}, DAY.ALL);
-        JSONObject nearest_area = super.getJson().getJSONArray("nearest_area").getJSONObject(0);
+        JSONObject nearest_area = UtilityClass.getJson(location).getJSONArray("nearest_area").getJSONObject(0);
         String v = "value";
         country = nearest_area.getJSONArray("country").getJSONObject(0).getString(v);
 
@@ -32,16 +28,19 @@ public final class NearestArea extends WeatherObject<NearestArea> {
 
     }
 
-    @Override
-    public @NotNull NearestArea getObject() throws IOException {
-        return new NearestArea(super.getLocation());
-    }
-
     public String getCountry() {
         return country;
     }
 
     public AreaInfo getAreaInfo() {
         return areaInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "NearestArea{" +
+                "country='" + country + '\'' +
+                ", areaInfo=" + areaInfo.toString() +
+                '}';
     }
 }

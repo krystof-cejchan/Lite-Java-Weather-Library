@@ -9,7 +9,7 @@ public final class AreaInfo {
     private final String population;
     private final String region;
 
-    public AreaInfo( String name, String latitude, String longitude, String population, String region) throws IOException {
+    public AreaInfo( String name, String latitude, String longitude, String population, String region) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -35,5 +35,16 @@ public final class AreaInfo {
 
     public String getRegion() {
         return region;
+    }
+
+    @Override
+    public String toString() {
+        return "AreaInfo{" +
+                "name='" + name + '\'' +
+                ", latitude='" + latitude + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", population='" + population + '\'' +
+                ", region='" + region + '\'' +
+                '}';
     }
 }

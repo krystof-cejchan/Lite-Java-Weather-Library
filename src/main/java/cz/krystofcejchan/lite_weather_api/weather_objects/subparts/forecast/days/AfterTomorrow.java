@@ -3,10 +3,8 @@ package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.day
 import cz.krystofcejchan.lite_weather_api.UtilityClass;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
-import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -35,14 +33,9 @@ public final class AfterTomorrow implements IForecastDayTimesAndDays {
      */
     final private TIME[] times;
 
-    public AfterTomorrow(String location, TIME[] times, DAY... days) throws IOException {
+    public AfterTomorrow(String location, TIME... times) throws IOException {
         this.times = times;
-        JSONObject jsonObject = new WeatherObject<AfterTomorrow>(location, times, days) {
-            @Override
-            public @NotNull AfterTomorrow getObject() throws IOException {
-                return new AfterTomorrow(getLocation(), getTimes(), getDays());
-            }
-        }.getJson();
+        JSONObject jsonObject = UtilityClass.getJson(location);
         JSONObject daily = jsonObject.getJSONArray("weather").getJSONObject(0).getJSONArray("astronomy")
                 .getJSONObject(0);
         moonIllumination = daily.getInt("moon_illumination");
