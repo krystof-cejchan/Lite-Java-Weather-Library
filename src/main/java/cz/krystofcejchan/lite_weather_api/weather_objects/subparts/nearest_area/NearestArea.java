@@ -1,7 +1,7 @@
 package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.nearest_area;
 
 import cz.krystofcejchan.lite_weather_api.UtilityClass;
-import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.nearest_area.helpers.AreaInfo;
+import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.nearest_area.details.AreaInfo;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -11,6 +11,9 @@ import java.io.IOException;
  */
 public final class NearestArea {
     private final String country;
+    /**
+     * object containing more info for {@link NearestArea}
+     */
     private final AreaInfo areaInfo;
 
     public NearestArea(String location) throws IOException {

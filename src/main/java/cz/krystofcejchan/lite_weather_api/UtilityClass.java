@@ -13,10 +13,29 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
+/**
+ * Utility Class representing <b>design pattern</b> of the same name
+ */
 public class UtilityClass {
+    /**
+     * storing
+     */
+    private static final List<ForecastAtHour> listOfAllDaysAndItsTimes = new ArrayList<>();
 
-    public static List<ForecastAtHour> listOfAllDaysAndItsTimes = new ArrayList<>();
+    public static List<ForecastAtHour> getListOfAllDaysAndItsTimes() {
+        return listOfAllDaysAndItsTimes;
+    }
+
+    public static void addToListOfAllDaysAndItsTimes(ForecastAtHour forecast) {
+        if (listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getDay).toList().contains(forecast.getDay())
+                && listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getTime).toList().contains(forecast.getTime()))
+            return;
+
+        listOfAllDaysAndItsTimes.add(forecast);
+    }
 
     private UtilityClass() {
         throw new CannotCreateInstance("This class serves as a utility class according to the design pattern of Utility Class");
@@ -73,4 +92,40 @@ public class UtilityClass {
     public static JSONObject getJson(String location) throws IOException {
         return new JSONObject(IOUtils.toString(new URL("https://wttr.in/" + location + "?format=j1"), StandardCharsets.UTF_8));
     }
+
+    public static class WebPageReader {
+        /**
+         * checks whether param is link or not
+         *
+         * @param link web URL
+         * @return true if link is truly link, else false
+         */
+        public static boolean isLink(String link) {
+            String urlRegex = "((http://|https://)?(www.)?(([a-zA-Z0-9-]){2,}\\.){1,4}([a-zA-Z]){2,6}(/([a-zA-Z-_/.0-9#:?=&;,]*)?)?)";
+            return Pattern.compile(urlRegex).matcher(link).find();
+        }
+
+        /**
+         * gets and returns text from webpage
+         *
+         * @param webUrl webpage url
+         * @return text from webpage
+         */
+        public static String getTextFromWebpage(String webUrl) {
+            try {
+                if (!WebPageReader.isLink(webUrl)) return null;
+                Scanner sc = new Scanner(new URL(webUrl).openStream());
+                StringBuilder sb = new StringBuilder();
+                while (sc.hasNext()) {
+                    sb.append(sc.next());
+                }
+                sc.close();
+                return sb.toString().replaceAll("<[^>]*>", "");
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
+
 }

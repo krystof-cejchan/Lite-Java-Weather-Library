@@ -240,4 +240,49 @@ public final class ForecastAtHour {
     public TIME getTime() {
         return time;
     }
+
+    @Override
+    public String toString() {
+        return "---ForecastAtHour---" +
+                "\nday=" + day +
+                "\ntime=" + time +
+                "\ndewPointC=" + dewPointC +
+                "\ndewPointF=" + dewPointF +
+                "\nfeelsLikeC=" + feelsLikeC +
+                "\nfeelsLikeF=" + feelsLikeF +
+                "\nheatIndexC=" + heatIndexC +
+                "\nheatIndexF=" + heatIndexF +
+                "\nwindChillC=" + windChillC +
+                "\nwindChillF=" + windChillF +
+                "\nwindGustKmph=" + windGustKmph +
+                "\nwindGustMiles=" + windGustMiles +
+                "\nchanceOfFog=" + chanceOfFog +
+                "\nchanceOfFrost=" + chanceOfFrost +
+                "\nchanceOfHighTemperature=" + chanceOfHighTemperature +
+                "\nchanceOfOvercast=" + chanceOfOvercast +
+                "\nchanceOfRain=" + chanceOfRain +
+                "\nchanceOfRemdry=" + chanceOfRemdry +
+                "\nchanceOfSnow=" + chanceOfSnow +
+                "\nchanceOfSunshine=" + chanceOfSunshine +
+                "\nchanceOfThunder=" + chanceOfThunder +
+                "\nchanceOfWindy=" + chanceOfWindy +
+                "\ncloudCover=" + cloudCover +
+                "\nhumidity=" + humidity +
+                "\nprecipInches=" + precipInches +
+                "\nprecipMM=" + precipMM +
+                "\npressure=" + pressure +
+                "\npressureInches=" + pressureInches +
+                "\ntemperatureC=" + temperatureC +
+                "\ntemperatureF=" + temperatureF +
+                "\ntimeInHundreds=" + timeInHundreds +
+                "\nuvIndex=" + uvIndex +
+                "\nvisibility=" + visibility +
+                "\nvisibilityMiles=" + visibilityMiles +
+                "\nweatherCode=" + weatherCode +
+                "\nweatherDescription='" + weatherDescription + '\'' +
+                "\nwindDir16Point='" + windDir16Point + '\'' +
+                "\nwindDirDegree=" + windDirDegree +
+                "\nwindSpeedKmph=" + windSpeedKmph +
+                "\nwindSpeedMiles=" + windSpeedMiles;
+    }
 }

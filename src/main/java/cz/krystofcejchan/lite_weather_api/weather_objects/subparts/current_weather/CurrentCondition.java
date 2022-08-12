@@ -48,11 +48,6 @@ public final class CurrentCondition {
     private final int windSpeedKmph;
     private final int windSpeedMiles;
 
-
-//    public static WeatherForecasterFormat<CurrentCondition> getDataObject(String location) throws IOException {
-//        return new CurrentCondition(location);
-//    }
-
     /**
      * Constructor required to create this object of this class
      *
@@ -60,7 +55,6 @@ public final class CurrentCondition {
      * @throws IOException if data are unavailable
      */
     public CurrentCondition(String location) throws IOException {
-        //super(location, new TIME[]{ALL}, DAY.ALL);
 
         //main json object for current condition
         JSONObject current_condition = UtilityClass.getJson(location).getJSONArray("current_condition").getJSONObject(0);

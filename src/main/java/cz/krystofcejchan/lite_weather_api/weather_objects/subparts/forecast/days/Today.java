@@ -3,10 +3,9 @@ package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.day
 import cz.krystofcejchan.lite_weather_api.UtilityClass;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
-import cz.krystofcejchan.lite_weather_api.weather_objects.WeatherObject;
+import cz.krystofcejchan.lite_weather_api.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -40,6 +39,9 @@ public final class Today implements IForecastDayTimesAndDays {
     private final TIME[] times;
 
     public Today(String location, TIME... times) throws IOException {
+        if (Arrays.asList(times).contains(TIME.ALL)) {
+            times = Arrays.stream(TIME.values()).filter(time -> !time.equals(TIME.ALL)).toList().toArray(new TIME[0]);
+        }
         this.times = times;
         JSONObject jsonObject = UtilityClass.getJson(location);
         JSONObject daily = jsonObject.getJSONArray("weather").getJSONObject(0).getJSONArray("astronomy")
@@ -63,11 +65,9 @@ public final class Today implements IForecastDayTimesAndDays {
         totalSnowInches = totalSnowCM / 2.54;
         uvIndex = daily.getInt("uvIndex");
 
+        for (TIME t : times)
+            IForecastDayTimesAndDays.super.addHour(new ForecastAtHour(jsonObject, getDay(), t));
 
-        for (TIME t : times) {
-            IForecastDayTimesAndDays.super.addHour(new ForecastAtHour(jsonObject, getDay(), t),
-                    UtilityClass.listOfAllDaysAndItsTimes);
-        }
         System.gc();
     }
 
@@ -83,7 +83,7 @@ public final class Today implements IForecastDayTimesAndDays {
     }
 
     @Override
-    public ForecastAtHour getForecastByTime(TIME time) {
+    public ForecastAtHour getForecastByTime(TIME time) throws NoDataFoundForThisDayAndTime {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(getDay(), time);
     }
 
@@ -181,7 +181,6 @@ public final class Today implements IForecastDayTimesAndDays {
                 "\ntotalSnowCM=" + totalSnowCM +
                 "\ntotalSnowInches=" + totalSnowInches +
                 "\nuvIndex=" + uvIndex +
-                "\nforecastHourlyList=" + forecastHourlyList +
-                "\ntimes=" + Arrays.toString(times);
+                "\nforecastHourlyList=" + forecastHourlyList;
     }
 }

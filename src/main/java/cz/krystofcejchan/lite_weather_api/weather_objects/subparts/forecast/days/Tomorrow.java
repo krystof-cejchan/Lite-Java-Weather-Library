@@ -3,11 +3,14 @@ package cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.day
 import cz.krystofcejchan.lite_weather_api.UtilityClass;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
+import cz.krystofcejchan.lite_weather_api.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -34,8 +37,10 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
     final private int uvIndex;
 
     public Tomorrow(String location, TIME... times) throws IOException {
+        if (Arrays.asList(times).contains(TIME.ALL)) {
+            times = Arrays.stream(TIME.values()).filter(time -> !time.equals(TIME.ALL)).toList().toArray(new TIME[0]);
+        }
         this.times = times;
-
         JSONObject json = UtilityClass.getJson(location);
         JSONObject daily = json.getJSONArray("weather").getJSONObject(0).getJSONArray("astronomy").getJSONObject(0);
         moonIllumination = daily.getInt("moon_illumination");
@@ -54,13 +59,12 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
         minTemperatureF = daily.getInt("mintempF");
         sunHour = daily.getDouble("sunHour");
         totalSnowCM = daily.getDouble("totalSnow_cm");
-        totalSnowInches = totalSnowCM / 2.54;
+        totalSnowInches = BigDecimal.valueOf(totalSnowCM / 2.54).setScale(2, RoundingMode.UP).doubleValue();
         uvIndex = daily.getInt("uvIndex");
 
-        for (TIME t : this.times) {
-            IForecastDayTimesAndDays.super.addHour(new ForecastAtHour(json, getDay(), t),
-                    UtilityClass.listOfAllDaysAndItsTimes);
-        }
+        for (TIME t : this.times)
+            IForecastDayTimesAndDays.super.addHour(new ForecastAtHour(json, getDay(), t));
+
         System.gc();
     }
 
@@ -75,7 +79,7 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
     }
 
     @Override
-    public ForecastAtHour getForecastByTime(TIME time) {
+    public ForecastAtHour getForecastByTime(TIME time) throws NoDataFoundForThisDayAndTime {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(getDay(), time);
     }
 

@@ -25,9 +25,19 @@ public class WeatherForecast {
     private final Tomorrow tomorrow;
     private final AfterTomorrow tomorrowAfter;
 
+    public WeatherForecast(String location, TIME time, DAY... days) throws IOException {
+        this(location, new TIME[]{time}, days);
+    }
+
+    public WeatherForecast(String location, DAY day, TIME... times) throws IOException {
+        this(location, times, day);
+    }
+
+    public WeatherForecast(String location, DAY[] day, TIME... times) throws IOException {
+        this(location, times, day);
+    }
 
     public WeatherForecast(String location, TIME[] times, DAY... days) throws IOException {
-
         Today todayHelper = null;
         Tomorrow tomorrowHelper = null;
         AfterTomorrow tomorrowAfterHelper = null;
@@ -36,9 +46,9 @@ public class WeatherForecast {
         List<TIME> timeList = new ArrayList<>(Arrays.stream(times).toList()).stream().distinct().collect(Collectors.toList());
         List<DAY> dayList = new ArrayList<>(Arrays.stream(days).toList()).stream().distinct().collect(Collectors.toList());
         if (dayList.contains(DAY.ALL))
-            dayList = dayList.stream().filter(it -> it == DAY.ALL).toList();
+            dayList = new ArrayList<>(Arrays.stream(DAY.values()).toList().stream().filter(day -> !day.equals(DAY.ALL)).toList());
         if (timeList.contains(TIME.ALL))
-            timeList = timeList.stream().filter(it -> it == TIME.ALL).toList();
+            timeList = new ArrayList<>(Arrays.stream(TIME.values()).toList().stream().filter(time -> !time.equals(TIME.ALL)).toList());
 
         TIME[] timesBackToArray = timeList.toArray(new TIME[0]);
         for (DAY day : dayList) {
@@ -57,35 +67,48 @@ public class WeatherForecast {
         today = todayHelper;
         tomorrow = tomorrowHelper;
         tomorrowAfter = tomorrowAfterHelper;
-
-
     }
 
     public ForecastAtHour getForecastFor(DAY day, TIME time) {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(day, time);
     }
 
-    public Today getToday() {
+    /**
+     * @return object containing all weather data for today
+     * @throws NoDataFoundForThisDay if you did not include this day in constructor
+     */
+    public Today getToday() throws NoDataFoundForThisDay {
         if (today == null)
             throw new NoDataFoundForThisDay("Today was not included in the constructor");
 
         return today;
     }
 
-    public Tomorrow getTomorrow() {
+    /**
+     * @return object containing all weather data for tomorrow
+     * @throws NoDataFoundForThisDay if you did not include this day in constructor
+     */
+    public Tomorrow getTomorrow() throws NoDataFoundForThisDay {
         if (tomorrow == null)
             throw new NoDataFoundForThisDay("Tomorrow was not included in the constructor");
 
         return tomorrow;
     }
 
-    public AfterTomorrow getTomorrowAfter() {
+    /**
+     * @return object containing all weather data for the day after tomorrow
+     * @throws NoDataFoundForThisDay if you did not include this day in constructor
+     */
+    public AfterTomorrow getTomorrowAfter() throws NoDataFoundForThisDay {
         if (tomorrowAfter == null)
             throw new NoDataFoundForThisDay("The day after tomorrow was not included in the constructor");
 
         return tomorrowAfter;
     }
 
+    /**
+     * @return object to string, modified to prevent {@link NullPointerException} if class fields are null
+     */
     @Override
     public String toString() {
         return "---  WeatherForecast  ---" +

@@ -1,41 +1,54 @@
 package cz.krystofcejchan.lite_weather_api.weather_objects;
 
 import cz.krystofcejchan.lite_weather_api.UtilityClass;
-import cz.krystofcejchan.lite_weather_api.WeatherForeCast;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_api.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.current_weather.CurrentCondition;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.forecast.WeatherForecast;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.nearest_area.NearestArea;
 import cz.krystofcejchan.lite_weather_api.weather_objects.subparts.request.Request;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
-public final class WeatherObject extends WeatherForeCast {
+/**
+ * Universal object from which you can get to more detailed objects {@link Request}, {@link NearestArea}, {@link WeatherForecast}, {@link CurrentCondition}, which lead
+ * to another even more detailed objects or class fields
+ */
+public final class WeatherObject {
     private final DAY[] days;
     private final TIME[] times;
     private final String location;
     private final JSONObject json;
-
+    private final String jsonAsText;
     private final CurrentCondition currentCondition;
     private final NearestArea nearestArea;
     private final Request request;
-    private final WeatherForecast weather;
+    private final WeatherForecast weatherForecast;
 
+    public WeatherObject(String location, TIME time, DAY... days) throws IOException {
+        this(location, new TIME[]{time}, days);
+    }
+
+    public WeatherObject(String location, DAY day, TIME... times) throws IOException {
+        this(location, times, day);
+    }
+
+    public WeatherObject(String location, DAY[] day, TIME... times) throws IOException {
+        this(location, times, day);
+    }
 
     public WeatherObject(String location, TIME[] times, DAY... days) throws IOException {
-        super(location);
         this.json = UtilityClass.getJson(location);
-        this.location = super.getLocation();
+        this.jsonAsText = UtilityClass.WebPageReader.getTextFromWebpage("https://wttr.in/" + location + "?format=j1");
+        this.location = location;
         this.days = days;
         this.times = times;
 
         this.currentCondition = new CurrentCondition(location);
         this.nearestArea = new NearestArea(location);
         this.request = new Request(location);
-        this.weather = new WeatherForecast(location, times, days);
+        this.weatherForecast = new WeatherForecast(location, times, days);
     }
 
     public DAY[] getDays() {
@@ -46,13 +59,12 @@ public final class WeatherObject extends WeatherForeCast {
         return times;
     }
 
-    @Override
-    public String getLocation() {
-        return location;
-    }
-
     public JSONObject getJson() {
         return json;
+    }
+
+    public String getJsonAsText() {
+        return jsonAsText;
     }
 
     public CurrentCondition getCurrentCondition() {
@@ -67,7 +79,11 @@ public final class WeatherObject extends WeatherForeCast {
         return request;
     }
 
-    public WeatherForecast getWeather() {
-        return weather;
+    public WeatherForecast getWeatherForecast() {
+        return weatherForecast;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }
