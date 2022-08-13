@@ -25,34 +25,6 @@ public class UtilityClass {
         throw new CannotCreateInstance("This class serves as a utility class according to the design pattern of Utility Class");
     }
 
-    public static class Storage {
-
-        /**
-         * storing all forecasts
-         */
-        private static final List<ForecastAtHour> listOfAllDaysAndItsTimes = new ArrayList<>();
-
-        public static List<ForecastAtHour> getListOfAllDaysAndItsTimes() {
-            return listOfAllDaysAndItsTimes;
-        }
-
-        public static void addToListOfAllDaysAndItsTimes(ForecastAtHour forecast) {
-            if (listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getDay).toList().contains(forecast.getDay())
-                    && listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getTime).toList().contains(forecast.getTime()))
-                return;
-
-            listOfAllDaysAndItsTimes.add(forecast);
-        }
-
-        public static void clearList() {
-            listOfAllDaysAndItsTimes.clear();
-        }
-
-        public static void removeElement(ForecastAtHour forecast) {
-            listOfAllDaysAndItsTimes.remove(forecast);
-        }
-    }
-
     public static LocalTime stringToLocalTime(StringBuilder time) {
         int[] hour_minutes = new int[2];
         boolean pm = time.toString().contains("PM");
@@ -100,9 +72,36 @@ public class UtilityClass {
         return LocalDate.of(year_month_day[0], year_month_day[1], year_month_day[2]);
     }
 
-
     public static JSONObject getJson(String location) throws IOException {
         return new JSONObject(IOUtils.toString(new URL("https://wttr.in/" + location + "?format=j1"), StandardCharsets.UTF_8));
+    }
+
+    public static class Storage {
+
+        /**
+         * storing all forecasts
+         */
+        private static final List<ForecastAtHour> listOfAllDaysAndItsTimes = new ArrayList<>();
+
+        public static List<ForecastAtHour> getListOfAllDaysAndItsTimes() {
+            return listOfAllDaysAndItsTimes;
+        }
+
+        public static void addToListOfAllDaysAndItsTimes(ForecastAtHour forecast) {
+            if (listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getDay).toList().contains(forecast.getDay())
+                    && listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getTime).toList().contains(forecast.getTime()))
+                return;
+
+            listOfAllDaysAndItsTimes.add(forecast);
+        }
+
+        public static void clearList() {
+            listOfAllDaysAndItsTimes.clear();
+        }
+
+        public static void removeElement(ForecastAtHour forecast) {
+            listOfAllDaysAndItsTimes.remove(forecast);
+        }
     }
 
     public static class WebPageReader {

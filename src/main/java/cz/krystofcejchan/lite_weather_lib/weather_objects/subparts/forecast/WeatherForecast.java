@@ -1,5 +1,6 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast;
 
+import cz.krystofcejchan.lite_weather_lib.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDay;
@@ -10,9 +11,7 @@ import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,6 +23,10 @@ public class WeatherForecast {
     private final Today today;
     private final Tomorrow tomorrow;
     private final AfterTomorrow tomorrowAfter;
+
+    private final DAY[] days;
+    private final TIME[] times;
+
 
     public WeatherForecast(String location, TIME time, DAY... days) throws IOException {
         this(location, new TIME[]{time}, days);
@@ -51,6 +54,8 @@ public class WeatherForecast {
             timeList = new ArrayList<>(Arrays.stream(TIME.values()).toList().stream().filter(time -> !time.equals(TIME.ALL)).toList());
 
         TIME[] timesBackToArray = timeList.toArray(new TIME[0]);
+        this.times = timesBackToArray;
+        this.days = dayList.toArray(new DAY[0]);
         for (DAY day : dayList) {
             switch (day) {
                 case TODAY -> todayHelper = new Today(location, timesBackToArray);
@@ -69,8 +74,33 @@ public class WeatherForecast {
         tomorrowAfter = tomorrowAfterHelper;
     }
 
+    public static void clearSavedForecasts() {
+        IForecastDayTimesAndDays.clearSavedForecasts();
+    }
+
+    public static void removedSavedForecast(ForecastAtHour forecast) {
+        IForecastDayTimesAndDays.removedSavedForecast(forecast);
+    }
+
     public ForecastAtHour getForecastFor(DAY day, TIME time) {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(day, time);
+    }
+
+    /**
+     * get all possible forecasts for all days and times you provided in the constructor
+     *
+     * @return a map of {@link DAY} and map of {@link TIME} and {@link ForecastAtHour}
+     */
+    public Map<DAY, Map<TIME, ForecastAtHour>> getAllForecastForAllDayAndAllTime() {
+        Map<DAY, Map<TIME, ForecastAtHour>> returnMap = new HashMap<>();
+        for (DAY day : days) {
+            switch (day) {
+                case TODAY -> returnMap.put(day, getToday().getAllForecastsForToday());
+                case TOMORROW -> returnMap.put(day, getTomorrow().getAllForecastsForToday());
+                case AFTER_TOMORROW -> returnMap.put(day, getTomorrowAfter().getAllForecastsForToday());
+            }
+        }
+        return returnMap;
     }
 
     /**
@@ -106,12 +136,19 @@ public class WeatherForecast {
         return tomorrowAfter;
     }
 
-    public static void clearSavedForecasts() {
-        IForecastDayTimesAndDays.clearSavedForecasts();
+    public DAY[] getDays() {
+        return days;
     }
 
-    public static void removedSavedForecast(ForecastAtHour forecast) {
-        IForecastDayTimesAndDays.removedSavedForecast(forecast);
+    public TIME[] getTimes() {
+        return times;
+    }
+
+    /**
+     * @return all saved forecasts
+     */
+    public List<ForecastAtHour> getAllSavedForecasts() {
+        return new ArrayList<>(UtilityClass.Storage.getListOfAllDaysAndItsTimes());
     }
 
     /**

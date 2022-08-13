@@ -1,5 +1,8 @@
 package cz.krystofcejchan.lite_weather_lib.enums_exception.enums;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * DAYs for weather forecast
  * <br> TODAY, TOMORROW, AFTER_TOMORROW, ALL;
@@ -23,5 +26,9 @@ public enum DAY {
             case AFTER_TOMORROW -> 2;
             case ALL -> -1;
         };
+    }
+
+    public static java.util.List<DAY> getAllDaysExcept(DAY day) {
+        return new ArrayList<>(Arrays.stream(values()).filter(it -> !it.equals(ALL)).toList());
     }
 }

@@ -37,6 +37,14 @@ public interface IForecastDayTimesAndDays {
 
     }
 
+    static void clearSavedForecasts() {
+        UtilityClass.Storage.clearList();
+    }
+
+    static void removedSavedForecast(ForecastAtHour forecast) {
+        UtilityClass.Storage.removeElement(forecast);
+    }
+
     /**
      * @return day which implementing class represents
      */
@@ -66,13 +74,5 @@ public interface IForecastDayTimesAndDays {
             forecastHourlyList.add(forecast);
             UtilityClass.Storage.addToListOfAllDaysAndItsTimes(forecast);
         }
-    }
-
-    static void clearSavedForecasts() {
-        UtilityClass.Storage.clearList();
-    }
-
-    static void removedSavedForecast(ForecastAtHour forecast) {
-        UtilityClass.Storage.removeElement(forecast);
     }
 }

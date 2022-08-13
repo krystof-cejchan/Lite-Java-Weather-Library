@@ -6,6 +6,8 @@ import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -14,6 +16,8 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class Tomorrow implements IForecastDayTimesAndDays {
     /**
@@ -81,6 +85,23 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
     @Override
     public ForecastAtHour getForecastByTime(TIME time) throws NoDataFoundForThisDayAndTime {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(getDay(), time);
+    }
+
+    /**
+     * get all possible forecast for {@link TIME}s provided in constructor
+     *
+     * @return map of time and forecast
+     */
+    public Map<TIME, ForecastAtHour> getAllForecastsForToday() {
+        Map<TIME, ForecastAtHour> map = new HashMap<>();
+        for (TIME time : getTime()) {
+            try {
+                map.put(time, getForecastByTime(time));
+            } catch (NoDataFoundForThisDayAndTime exception) {
+                exception.printStackTrace();
+            }
+        }
+        return map;
     }
 
     public int getMoonIllumination() {
@@ -151,8 +172,9 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
         return uvIndex;
     }
 
+    @Contract(pure = true)
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "---Tomorrow---" +
                 "\ntimes=" + Arrays.toString(times) +
                 "\nmoonIllumination=" + moonIllumination +

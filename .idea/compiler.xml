@@ -9,5 +9,6 @@
         <module name="weather_api" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="16" />
   </component>
 </project>

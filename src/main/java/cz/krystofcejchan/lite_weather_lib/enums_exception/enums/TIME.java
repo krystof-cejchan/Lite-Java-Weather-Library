@@ -1,5 +1,8 @@
 package cz.krystofcejchan.lite_weather_lib.enums_exception.enums;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * TIMES for weather forecast
  * <br>
@@ -34,5 +37,9 @@ public enum TIME {
             case PM_9 -> 7;
             case ALL -> -1;
         };
+    }
+
+    public static java.util.List<TIME> getAllEnumsExcept(TIME time) {
+        return new ArrayList<>(Arrays.stream(values()).filter(it -> !it.equals(time)).toList());
     }
 }
