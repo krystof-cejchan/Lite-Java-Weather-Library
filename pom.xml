@@ -5,8 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.krystofcejchan</groupId>
-    <artifactId>weatherforecaster</artifactId>
+    <artifactId>lite_weather_library</artifactId>
     <version>1.0.0</version>
+
+    <name>Lite Java Weather Library</name>
+    <description>A Java Library for better and easier worldwide Weather data including current condition, forecast,
+        location info etc.
+        Weather Data Source: https://github.com/chubin/wttr.in
+    </description>
+    <url>https://github.com/krystof-cejchan/Lite-Java-Weather-Library</url>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
