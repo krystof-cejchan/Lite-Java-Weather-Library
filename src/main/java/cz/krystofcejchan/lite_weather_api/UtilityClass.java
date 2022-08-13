@@ -20,25 +20,37 @@ import java.util.regex.Pattern;
  * Utility Class representing <b>design pattern</b> of the same name
  */
 public class UtilityClass {
-    /**
-     * storing
-     */
-    private static final List<ForecastAtHour> listOfAllDaysAndItsTimes = new ArrayList<>();
-
-    public static List<ForecastAtHour> getListOfAllDaysAndItsTimes() {
-        return listOfAllDaysAndItsTimes;
-    }
-
-    public static void addToListOfAllDaysAndItsTimes(ForecastAtHour forecast) {
-        if (listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getDay).toList().contains(forecast.getDay())
-                && listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getTime).toList().contains(forecast.getTime()))
-            return;
-
-        listOfAllDaysAndItsTimes.add(forecast);
-    }
 
     private UtilityClass() {
         throw new CannotCreateInstance("This class serves as a utility class according to the design pattern of Utility Class");
+    }
+
+    public static class Storage {
+
+        /**
+         * storing all forecasts
+         */
+        private static final List<ForecastAtHour> listOfAllDaysAndItsTimes = new ArrayList<>();
+
+        public static List<ForecastAtHour> getListOfAllDaysAndItsTimes() {
+            return listOfAllDaysAndItsTimes;
+        }
+
+        public static void addToListOfAllDaysAndItsTimes(ForecastAtHour forecast) {
+            if (listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getDay).toList().contains(forecast.getDay())
+                    && listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getTime).toList().contains(forecast.getTime()))
+                return;
+
+            listOfAllDaysAndItsTimes.add(forecast);
+        }
+
+        public static void clearList() {
+            listOfAllDaysAndItsTimes.clear();
+        }
+
+        public static void removeElement(ForecastAtHour forecast) {
+            listOfAllDaysAndItsTimes.remove(forecast);
+        }
     }
 
     public static LocalTime stringToLocalTime(StringBuilder time) {

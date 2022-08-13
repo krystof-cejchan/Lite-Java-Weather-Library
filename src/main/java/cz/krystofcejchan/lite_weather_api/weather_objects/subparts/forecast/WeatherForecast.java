@@ -106,6 +106,14 @@ public class WeatherForecast {
         return tomorrowAfter;
     }
 
+    public static void clearSavedForecasts() {
+        IForecastDayTimesAndDays.clearSavedForecasts();
+    }
+
+    public static void removedSavedForecast(ForecastAtHour forecast) {
+        IForecastDayTimesAndDays.removedSavedForecast(forecast);
+    }
+
     /**
      * @return object to string, modified to prevent {@link NullPointerException} if class fields are null
      */

@@ -24,10 +24,11 @@ public interface IForecastDayTimesAndDays {
      *                                      or include {@link TIME} and {@link DAY} you want to know the forecast for in the constructor when creating forecast object or its subclasses
      */
     static @NotNull ForecastAtHour getMatchingObjectFrom(DAY day, TIME time) throws NoDataFoundForThisDayAndTime {
-        for (ForecastAtHour f : UtilityClass.getListOfAllDaysAndItsTimes()) {
-            if (f.getTime().equals(time) && f.getDay().equals(day)) return f;
-        }
-        throw new NoDataFoundForThisDayAndTime("No data found for such day and time");
+        return UtilityClass.Storage.getListOfAllDaysAndItsTimes().stream()
+                .filter(f -> f.getDay().equals(day) && f.getTime().equals(time))
+                .findFirst()
+                .orElseThrow(() -> new NoDataFoundForThisDayAndTime("No data found for such day and time"));
+
     }
 
     /**
@@ -54,10 +55,18 @@ public interface IForecastDayTimesAndDays {
      * @param forecast {@link ForecastAtHour} object containing weather data for specific day and time(hour)
      */
     default void addHour(ForecastAtHour forecast) {
-        List<ForecastAtHour> forecastHourlyList = UtilityClass.getListOfAllDaysAndItsTimes();
+        List<ForecastAtHour> forecastHourlyList = UtilityClass.Storage.getListOfAllDaysAndItsTimes();
         if (forecastHourlyList.stream().noneMatch(it -> it.equals(forecast))) {
             forecastHourlyList.add(forecast);
-            UtilityClass.addToListOfAllDaysAndItsTimes(forecast);
+            UtilityClass.Storage.addToListOfAllDaysAndItsTimes(forecast);
         }
+    }
+
+    static void clearSavedForecasts() {
+        UtilityClass.Storage.clearList();
+    }
+
+    static void removedSavedForecast(ForecastAtHour forecast) {
+        UtilityClass.Storage.removeElement(forecast);
     }
 }
