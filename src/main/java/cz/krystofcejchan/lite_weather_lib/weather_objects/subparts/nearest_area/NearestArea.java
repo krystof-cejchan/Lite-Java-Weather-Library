@@ -8,6 +8,8 @@ import java.io.IOException;
 
 /**
  * Information about the area where the weather measurement was performed
+ * @author krystof-cejchan
+ * @version 17
  */
 public final class NearestArea {
     private final String country;
@@ -41,9 +43,8 @@ public final class NearestArea {
 
     @Override
     public String toString() {
-        return "NearestArea{" +
-                "country='" + country + '\'' +
-                ", areaInfo=" + areaInfo.toString() +
-                '}';
+        return "--NearestArea--" +
+                "\ncountry='" + country +
+                "\nareaInfo=" + areaInfo.toString();
     }
 }

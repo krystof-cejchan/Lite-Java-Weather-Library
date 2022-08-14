@@ -1,5 +1,6 @@
 package cz.krystofcejchan.lite_weather_lib;
 
+import com.google.common.net.UrlEscapers;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CannotCreateInstance;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import org.apache.commons.io.IOUtils;
@@ -73,7 +74,10 @@ public class UtilityClass {
     }
 
     public static JSONObject getJson(String location) throws IOException {
-        return new JSONObject(IOUtils.toString(new URL("https://wttr.in/" + location + "?format=j1"), StandardCharsets.UTF_8));
+        return new JSONObject(IOUtils.toString(
+                new URL(UrlEscapers
+                        .urlFragmentEscaper().escape("https://wttr.in/" + location + "?format=j1")),
+                StandardCharsets.UTF_8));
     }
 
     public static class Storage {

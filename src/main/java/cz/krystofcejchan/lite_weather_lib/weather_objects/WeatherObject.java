@@ -10,10 +10,13 @@ import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.request.Reque
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Universal object from which you can get to more detailed objects {@link Request}, {@link NearestArea}, {@link WeatherForecast}, {@link CurrentCondition}, which lead
  * to another even more detailed objects or class fields
+ * @author krystof-cejchan
+ * @version 17
  */
 public final class WeatherObject {
     private final DAY[] days;
@@ -85,5 +88,19 @@ public final class WeatherObject {
 
     public String getLocation() {
         return location;
+    }
+
+    @Override
+    public String toString() {
+        return "---WeatherObject---" +
+                "\ndays=" + Arrays.toString(days) +
+                "\ntimes=" + Arrays.toString(times) +
+                "\nlocation='" + location.toString() + '\'' +
+                "\njson=" + json +
+                "\njsonAsText='" + jsonAsText.toString() + '\'' +
+                "\ncurrentCondition=" + currentCondition.toString() +
+                "\nnearestArea=" + nearestArea.toString() +
+                "\nrequest=" + request.toString() +
+                "\nweatherForecast=" + weatherForecast.toString();
     }
 }

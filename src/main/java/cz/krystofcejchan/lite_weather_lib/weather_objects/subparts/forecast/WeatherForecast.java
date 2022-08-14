@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
  * Weather forecast for today, tomorrow, the day after tomorrow <br>
  * Data can be separated into hours → 12am, 3am, 6am, 9am, 12pm, 3pm, 6pm, 9pm.<br>
  * see {@link TIME}, {@link DAY}<br>
+ * @author krystof-cejchan
+ * @version 17
  */
 public class WeatherForecast {
     private final Today today;

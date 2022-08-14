@@ -16,7 +16,11 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.WeatherForecast} for the day after tomorrow
+ * @author krystof-cejchan
+ * @version 17
+ */
 public final class AfterTomorrow implements IForecastDayTimesAndDays {
 
     final private int moonIllumination;

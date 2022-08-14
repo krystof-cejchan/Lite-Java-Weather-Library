@@ -4,6 +4,11 @@ import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import org.json.JSONObject;
 
+/**
+ * Forecast for specific day and hour/time
+ * @author krystof-cejchan
+ * @version 17
+ */
 public final class ForecastAtHour {
     private final DAY day;
     private final TIME time;

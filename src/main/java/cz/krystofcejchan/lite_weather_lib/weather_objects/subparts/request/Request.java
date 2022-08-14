@@ -7,6 +7,9 @@ import java.io.IOException;
 
 /**
  * request data
+ *
+ * @author krystof-cejchan
+ * @version 17
  */
 public final class Request {
     private final String query;
