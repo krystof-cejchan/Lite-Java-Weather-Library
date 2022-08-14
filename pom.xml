@@ -23,7 +23,7 @@
 
     <developers>
         <developer>
-            <name>Kryštof Čejchna</name>
+            <name>Kryštof Čejchan</name>
             <email>krystofcejchan@seznam.cz</email>
             <organization>cz.krystofcejchan</organization>
             <organizationUrl>krystofcejchan.cz</organizationUrl>
@@ -56,7 +56,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>23.0</version>
+            <version>31.1-jre</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
