@@ -4,6 +4,7 @@ import cz.krystofcejchan.lite_weather_lib.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDay;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.AfterTomorrow;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.Today;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.Tomorrow;
@@ -76,15 +77,29 @@ public class WeatherForecast {
         tomorrowAfter = tomorrowAfterHelper;
     }
 
+    /**
+     * removes saved forecasts
+     */
     public static void clearSavedForecasts() {
         IForecastDayTimesAndDays.clearSavedForecasts();
     }
 
+    /**
+     * removes forecast from param
+     * @param forecast to be removed
+     */
     public static void removedSavedForecast(ForecastAtHour forecast) {
         IForecastDayTimesAndDays.removedSavedForecast(forecast);
     }
 
-    public ForecastAtHour getForecastFor(DAY day, TIME time) {
+    /**
+     * returns forecast for specific day and time
+     * @param day {@link DAY} for which you want to know the forecast
+     * @param time {@link TIME} for which you want to know the forecast
+     * @return ForecastAtHour for provided DAY and TIME
+     * @throws NoDataFoundForThisDayAndTime if you did not include day and time when creating constructor
+     */
+    public ForecastAtHour getForecastFor(DAY day, TIME time)throws NoDataFoundForThisDayAndTime {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(day, time);
     }
 
@@ -138,10 +153,18 @@ public class WeatherForecast {
         return tomorrowAfter;
     }
 
+    /**
+     *
+     * @return DAYs provided in constructor
+     */
     public DAY[] getDays() {
         return days;
     }
 
+    /**
+     *
+     * @return TIMEs provided in constructor
+     */
     public TIME[] getTimes() {
         return times;
     }

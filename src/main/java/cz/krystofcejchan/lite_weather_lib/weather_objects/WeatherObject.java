@@ -54,38 +54,74 @@ public final class WeatherObject {
         this.weatherForecast = new WeatherForecast(location, times, days);
     }
 
+    /**
+     *
+     * @return provided days in constructor
+     */
     public DAY[] getDays() {
         return days;
     }
 
+    /**
+     *
+     * @return provided TIMEs in constructor
+     */
     public TIME[] getTimes() {
         return times;
     }
 
+    /**
+     *
+     * @return json as {@link JSONObject}
+     */
     public JSONObject getJson() {
         return json;
     }
 
+    /**
+     *
+     * @return JSONObject as {@link String}
+     */
     public String getJsonAsText() {
         return jsonAsText;
     }
 
+    /**
+     *
+     * @return CurrentCondition object
+     */
     public CurrentCondition getCurrentCondition() {
         return currentCondition;
     }
 
+    /**
+     *
+     * @return Nearest Area object
+     */
     public NearestArea getNearestArea() {
         return nearestArea;
     }
 
+    /**
+     *
+     * @return Request object
+     */
     public Request getRequest() {
         return request;
     }
 
+    /**
+     *
+     * @return WeatherForecast object
+     */
     public WeatherForecast getWeatherForecast() {
         return weatherForecast;
     }
 
+    /**
+     *
+     * @return location from constructor
+     */
     public String getLocation() {
         return location;
     }

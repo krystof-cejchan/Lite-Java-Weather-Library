@@ -86,10 +86,18 @@ public final class ForecastAtHour {
 
     }
 
+    /**
+     *
+     * @return The dew point is the temperature to which air must be cooled to become saturated with water vapor
+     */
     public int getDewPointC() {
         return dewPointC;
     }
 
+    /**
+     *
+     * @return The dew point is the temperature to which air must be cooled to become saturated with water vapor
+     */
     public int getDewPointF() {
         return dewPointF;
     }
@@ -102,26 +110,49 @@ public final class ForecastAtHour {
         return feelsLikeF;
     }
 
+    /**
+     *
+     * @return The heat index, also known as the apparent temperature, is what the temperature feels like to the human body when relative humidity is combined with the air temperature
+     */
     public int getHeatIndexC() {
         return heatIndexC;
     }
 
+    /**
+     *
+     * @return The heat index, also known as the apparent temperature, is what the temperature feels like to the human body when relative humidity is combined with the air temperature
+     */
     public int getHeatIndexF() {
         return heatIndexF;
     }
 
+    /**
+     *
+     * @return Wind chill or windchill is the lowering of body temperature due to the passing-flow of lower-temperature air.
+     */
     public int getWindChillC() {
         return windChillC;
     }
 
+    /**
+     *
+     * @return Wind chill or windchill is the lowering of body temperature due to the passing-flow of lower-temperature air.
+     */
     public int getWindChillF() {
         return windChillF;
     }
 
+    /**
+     * @return A gust or wind gust is a brief increase in the speed of the wind, usually less than 20 seconds.
+     */
     public int getWindGustKmph() {
         return windGustKmph;
     }
 
+    /**
+     *
+     * @return A gust or wind gust is a brief increase in the speed of the wind, usually less than 20 seconds.
+     */
     public int getWindGustMiles() {
         return windGustMiles;
     }
@@ -174,10 +205,18 @@ public final class ForecastAtHour {
         return humidity;
     }
 
+    /**
+     *
+     * @return Precipitation
+     */
     public double getPrecipInches() {
         return precipInches;
     }
 
+    /**
+     *
+     * @return Precipitation
+     */
     public double getPrecipMM() {
         return precipMM;
     }

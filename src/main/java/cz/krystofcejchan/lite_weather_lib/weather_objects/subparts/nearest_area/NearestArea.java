@@ -8,6 +8,7 @@ import java.io.IOException;
 
 /**
  * Information about the area where the weather measurement was performed
+ *
  * @author krystof-cejchan
  * @version 17
  */
@@ -33,10 +34,16 @@ public final class NearestArea {
 
     }
 
+    /**
+     * @return returns country if possible
+     */
     public String getCountry() {
         return country;
     }
 
+    /**
+     * @return AreaInfo class containing more data
+     */
     public AreaInfo getAreaInfo() {
         return areaInfo;
     }

@@ -80,6 +80,9 @@ public class UtilityClass {
                 StandardCharsets.UTF_8));
     }
 
+    /**
+     * Storing saved data
+     */
     public static class Storage {
 
         /**
@@ -108,6 +111,9 @@ public class UtilityClass {
         }
     }
 
+    /**
+     * class for reading webpages
+     */
     public static class WebPageReader {
         /**
          * checks whether param is link or not
