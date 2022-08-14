@@ -35,8 +35,8 @@ System.out.println(weatherObject.getWeatherForecast().getForecastFor(DAY.TOMORRO
 //System.out.println(weatherObject.getJsonAsText());
 System.out.println(weatherObject.getCurrentCondition().getVisibility());
 ```
-```css
 Output:
+```css
 ---ForecastAtHour---
 day=TOMORROW
 time=AM_9
@@ -80,6 +80,7 @@ windSpeedKmph=1
 windSpeedMiles=1
 10
 ```
+
 ### Constructors
 ![Constructors](http://kys.hys.cz/jo/weather_forecast_constructors.png)
 
