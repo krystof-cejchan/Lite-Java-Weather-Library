@@ -2,10 +2,13 @@ package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.day
 
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
+import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 /**
  * Forecast for specific day and hour/time
+ *
  * @author krystof-cejchan
  * @version 17
  */
@@ -35,7 +38,7 @@ public final class ForecastAtHour {
     private final int windSpeedKmph, windSpeedMiles;
 
 
-    public ForecastAtHour(JSONObject startOfJsonObject, DAY day, TIME time) {
+    public ForecastAtHour(@NotNull JSONObject startOfJsonObject, @NotNull DAY day, @NotNull TIME time) {
         this.day = day;
         this.time = time;
         JSONObject certHour = startOfJsonObject
@@ -87,7 +90,6 @@ public final class ForecastAtHour {
     }
 
     /**
-     *
      * @return The dew point is the temperature to which air must be cooled to become saturated with water vapor
      */
     public int getDewPointC() {
@@ -95,7 +97,6 @@ public final class ForecastAtHour {
     }
 
     /**
-     *
      * @return The dew point is the temperature to which air must be cooled to become saturated with water vapor
      */
     public int getDewPointF() {
@@ -111,7 +112,6 @@ public final class ForecastAtHour {
     }
 
     /**
-     *
      * @return The heat index, also known as the apparent temperature, is what the temperature feels like to the human body when relative humidity is combined with the air temperature
      */
     public int getHeatIndexC() {
@@ -119,7 +119,6 @@ public final class ForecastAtHour {
     }
 
     /**
-     *
      * @return The heat index, also known as the apparent temperature, is what the temperature feels like to the human body when relative humidity is combined with the air temperature
      */
     public int getHeatIndexF() {
@@ -127,7 +126,6 @@ public final class ForecastAtHour {
     }
 
     /**
-     *
      * @return Wind chill or windchill is the lowering of body temperature due to the passing-flow of lower-temperature air.
      */
     public int getWindChillC() {
@@ -135,7 +133,6 @@ public final class ForecastAtHour {
     }
 
     /**
-     *
      * @return Wind chill or windchill is the lowering of body temperature due to the passing-flow of lower-temperature air.
      */
     public int getWindChillF() {
@@ -150,7 +147,6 @@ public final class ForecastAtHour {
     }
 
     /**
-     *
      * @return A gust or wind gust is a brief increase in the speed of the wind, usually less than 20 seconds.
      */
     public int getWindGustMiles() {
@@ -206,7 +202,6 @@ public final class ForecastAtHour {
     }
 
     /**
-     *
      * @return Precipitation
      */
     public double getPrecipInches() {
@@ -214,7 +209,6 @@ public final class ForecastAtHour {
     }
 
     /**
-     *
      * @return Precipitation
      */
     public double getPrecipMM() {
@@ -283,6 +277,14 @@ public final class ForecastAtHour {
 
     public TIME getTime() {
         return time;
+    }
+
+    /**
+     * prints current object.toString to the console
+     */
+    public void print() {
+        MethodRefPrint<ForecastAtHour> a = new MethodRefPrint<>(this);
+        a.print();
     }
 
     @Override

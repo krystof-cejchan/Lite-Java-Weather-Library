@@ -1,10 +1,11 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area;
 
 import cz.krystofcejchan.lite_weather_lib.UtilityClass;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NotFoundLocation;
+import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.details.AreaInfo;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 /**
  * Information about the area where the weather measurement was performed
@@ -19,7 +20,7 @@ public final class NearestArea {
      */
     private final AreaInfo areaInfo;
 
-    public NearestArea(String location) throws IOException {
+    public NearestArea(@NotNull String location) throws NotFoundLocation {
         JSONObject nearest_area = UtilityClass.getJson(location).getJSONArray("nearest_area").getJSONObject(0);
         String v = "value";
         country = nearest_area.getJSONArray("country").getJSONObject(0).getString(v);
@@ -46,6 +47,14 @@ public final class NearestArea {
      */
     public AreaInfo getAreaInfo() {
         return areaInfo;
+    }
+
+    /**
+     * prints current object.toString to the console
+     */
+    public void print() {
+        MethodRefPrint<NearestArea> a = new MethodRefPrint<>(this);
+        a.print();
     }
 
     @Override

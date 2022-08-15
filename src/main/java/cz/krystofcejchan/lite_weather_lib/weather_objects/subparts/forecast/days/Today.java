@@ -4,6 +4,8 @@ import cz.krystofcejchan.lite_weather_lib.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NotFoundLocation;
+import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
 import org.jetbrains.annotations.Contract;
@@ -17,6 +19,7 @@ import java.util.*;
 
 /**
  * {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.WeatherForecast} for today
+ *
  * @author krystof-cejchan
  * @version 17
  */
@@ -43,7 +46,7 @@ public final class Today implements IForecastDayTimesAndDays {
      */
     private final TIME[] times;
 
-    public Today(String location, TIME... times) throws IOException {
+    public Today(@NotNull String location, @NotNull TIME... times) throws NotFoundLocation {
         if (Arrays.asList(times).contains(TIME.ALL)) {
             times = Arrays.stream(TIME.values()).filter(time -> !time.equals(TIME.ALL)).toList().toArray(new TIME[0]);
         }
@@ -88,7 +91,7 @@ public final class Today implements IForecastDayTimesAndDays {
     }
 
     @Override
-    public ForecastAtHour getForecastByTime(TIME time) throws NoDataFoundForThisDayAndTime {
+    public ForecastAtHour getForecastByTime(@NotNull TIME time) throws NoDataFoundForThisDayAndTime {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(getDay(), time);
     }
 
@@ -181,10 +184,18 @@ public final class Today implements IForecastDayTimesAndDays {
         return forecastHourlyList;
     }
 
+    /**
+     * prints current object.toString to the console
+     */
+    public void print() {
+        MethodRefPrint<Today> a = new MethodRefPrint<>(this);
+        a.print();
+    }
 
     @Contract(pure = true)
     @Override
-    public @NotNull String toString() {
+    public @NotNull
+    String toString() {
         return "---Today---" +
                 "\ntimes=" + Arrays.toString(times) +
                 "\noonIllumination=" + moonIllumination +

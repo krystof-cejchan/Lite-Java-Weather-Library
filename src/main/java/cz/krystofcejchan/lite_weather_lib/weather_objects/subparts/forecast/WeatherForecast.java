@@ -5,11 +5,13 @@ import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDay;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
+import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.AfterTomorrow;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.Today;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.Tomorrow;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.*;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
  * Weather forecast for today, tomorrow, the day after tomorrow <br>
  * Data can be separated into hours → 12am, 3am, 6am, 9am, 12pm, 3pm, 6pm, 9pm.<br>
  * see {@link TIME}, {@link DAY}<br>
+ *
  * @author krystof-cejchan
  * @version 17
  */
@@ -31,19 +34,19 @@ public class WeatherForecast {
     private final TIME[] times;
 
 
-    public WeatherForecast(String location, TIME time, DAY... days) throws IOException {
+    public WeatherForecast(@NotNull String location, @NotNull TIME time, @NotNull DAY... days) throws IOException {
         this(location, new TIME[]{time}, days);
     }
 
-    public WeatherForecast(String location, DAY day, TIME... times) throws IOException {
+    public WeatherForecast(@NotNull String location, @NotNull DAY day, @NotNull TIME... times) throws IOException {
         this(location, times, day);
     }
 
-    public WeatherForecast(String location, DAY[] day, TIME... times) throws IOException {
+    public WeatherForecast(@NotNull String location, @NotNull DAY[] day, @NotNull TIME... times) throws IOException {
         this(location, times, day);
     }
 
-    public WeatherForecast(String location, TIME[] times, DAY... days) throws IOException {
+    public WeatherForecast(@NotNull String location, @NotNull TIME[] times, @NotNull DAY... days) throws IOException {
         Today todayHelper = null;
         Tomorrow tomorrowHelper = null;
         AfterTomorrow tomorrowAfterHelper = null;
@@ -86,6 +89,7 @@ public class WeatherForecast {
 
     /**
      * removes forecast from param
+     *
      * @param forecast to be removed
      */
     public static void removedSavedForecast(ForecastAtHour forecast) {
@@ -94,12 +98,13 @@ public class WeatherForecast {
 
     /**
      * returns forecast for specific day and time
-     * @param day {@link DAY} for which you want to know the forecast
+     *
+     * @param day  {@link DAY} for which you want to know the forecast
      * @param time {@link TIME} for which you want to know the forecast
      * @return ForecastAtHour for provided DAY and TIME
      * @throws NoDataFoundForThisDayAndTime if you did not include day and time when creating constructor
      */
-    public ForecastAtHour getForecastFor(DAY day, TIME time)throws NoDataFoundForThisDayAndTime {
+    public ForecastAtHour getForecastFor(@NotNull DAY day, @NotNull TIME time) throws NoDataFoundForThisDayAndTime {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(day, time);
     }
 
@@ -154,7 +159,6 @@ public class WeatherForecast {
     }
 
     /**
-     *
      * @return DAYs provided in constructor
      */
     public DAY[] getDays() {
@@ -162,7 +166,6 @@ public class WeatherForecast {
     }
 
     /**
-     *
      * @return TIMEs provided in constructor
      */
     public TIME[] getTimes() {
@@ -174,6 +177,14 @@ public class WeatherForecast {
      */
     public List<ForecastAtHour> getAllSavedForecasts() {
         return new ArrayList<>(UtilityClass.Storage.getListOfAllDaysAndItsTimes());
+    }
+
+    /**
+     * prints current object.toString to the console
+     */
+    public void print() {
+        MethodRefPrint<WeatherForecast> a = new MethodRefPrint<>(this);
+        a.print();
     }
 
     /**

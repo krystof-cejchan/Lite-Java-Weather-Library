@@ -3,6 +3,7 @@ package cz.krystofcejchan.lite_weather_lib.weather_objects;
 import cz.krystofcejchan.lite_weather_lib.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NotFoundLocation;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.current_weather.CurrentCondition;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.WeatherForecast;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 /**
  * Universal object from which you can get to more detailed objects {@link Request}, {@link NearestArea}, {@link WeatherForecast}, {@link CurrentCondition}, which lead
  * to another even more detailed objects or class fields
+ *
  * @author krystof-cejchan
  * @version 17
  */
@@ -41,7 +43,7 @@ public final class WeatherObject {
         this(location, times, day);
     }
 
-    public WeatherObject(String location, TIME[] times, DAY... days) throws IOException {
+    public WeatherObject(String location, TIME[] times, DAY... days) throws IOException, NotFoundLocation {
         this.json = UtilityClass.getJson(location);
         this.jsonAsText = UtilityClass.WebPageReader.getTextFromWebpage("https://wttr.in/" + location + "?format=j1");
         this.location = location;
@@ -55,7 +57,6 @@ public final class WeatherObject {
     }
 
     /**
-     *
      * @return provided days in constructor
      */
     public DAY[] getDays() {
@@ -63,7 +64,6 @@ public final class WeatherObject {
     }
 
     /**
-     *
      * @return provided TIMEs in constructor
      */
     public TIME[] getTimes() {
@@ -71,7 +71,6 @@ public final class WeatherObject {
     }
 
     /**
-     *
      * @return json as {@link JSONObject}
      */
     public JSONObject getJson() {
@@ -79,7 +78,6 @@ public final class WeatherObject {
     }
 
     /**
-     *
      * @return JSONObject as {@link String}
      */
     public String getJsonAsText() {
@@ -87,7 +85,6 @@ public final class WeatherObject {
     }
 
     /**
-     *
      * @return CurrentCondition object
      */
     public CurrentCondition getCurrentCondition() {
@@ -95,7 +92,6 @@ public final class WeatherObject {
     }
 
     /**
-     *
      * @return Nearest Area object
      */
     public NearestArea getNearestArea() {
@@ -103,7 +99,6 @@ public final class WeatherObject {
     }
 
     /**
-     *
      * @return Request object
      */
     public Request getRequest() {
@@ -111,7 +106,6 @@ public final class WeatherObject {
     }
 
     /**
-     *
      * @return WeatherForecast object
      */
     public WeatherForecast getWeatherForecast() {
@@ -119,11 +113,18 @@ public final class WeatherObject {
     }
 
     /**
-     *
      * @return location from constructor
      */
     public String getLocation() {
         return location;
+    }
+
+    /**
+     * prints current object.toString to the console
+     */
+    public void print() {
+        MethodRefPrint<WeatherObject> a = new MethodRefPrint<>(this);
+        a.print();
     }
 
     @Override
@@ -131,9 +132,9 @@ public final class WeatherObject {
         return "---WeatherObject---" +
                 "\ndays=" + Arrays.toString(days) +
                 "\ntimes=" + Arrays.toString(times) +
-                "\nlocation='" + location.toString() + '\'' +
+                "\nlocation='" + location + '\'' +
                 "\njson=" + json +
-                "\njsonAsText='" + jsonAsText.toString() + '\'' +
+                "\njsonAsText='" + jsonAsText + '\'' +
                 "\ncurrentCondition=" + currentCondition.toString() +
                 "\nnearestArea=" + nearestArea.toString() +
                 "\nrequest=" + request.toString() +

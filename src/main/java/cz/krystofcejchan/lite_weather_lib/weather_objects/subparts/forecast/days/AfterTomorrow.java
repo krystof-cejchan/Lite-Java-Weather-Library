@@ -4,6 +4,8 @@ import cz.krystofcejchan.lite_weather_lib.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NotFoundLocation;
+import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
 import org.jetbrains.annotations.Contract;
@@ -16,8 +18,10 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.WeatherForecast} for the day after tomorrow
+ *
  * @author krystof-cejchan
  * @version 17
  */
@@ -42,7 +46,7 @@ public final class AfterTomorrow implements IForecastDayTimesAndDays {
      */
     final private TIME[] times;
 
-    public AfterTomorrow(String location, TIME... times) throws IOException {
+    public AfterTomorrow(@NotNull String location, @NotNull TIME... times) throws NotFoundLocation {
         if (Arrays.asList(times).contains(TIME.ALL)) {
             times = Arrays.stream(TIME.values()).filter(time -> !time.equals(TIME.ALL)).toList().toArray(new TIME[0]);
         }
@@ -86,7 +90,7 @@ public final class AfterTomorrow implements IForecastDayTimesAndDays {
     }
 
     @Override
-    public ForecastAtHour getForecastByTime(TIME time) throws NoDataFoundForThisDayAndTime {
+    public ForecastAtHour getForecastByTime(@NotNull TIME time) throws NoDataFoundForThisDayAndTime {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(getDay(), time);
     }
 
@@ -175,9 +179,18 @@ public final class AfterTomorrow implements IForecastDayTimesAndDays {
         return uvIndex;
     }
 
+    /**
+     * prints current object.toString to the console
+     */
+    public void print() {
+        MethodRefPrint<AfterTomorrow> a = new MethodRefPrint<>(this);
+        a.print();
+    }
+
     @Contract(pure = true)
     @Override
-    public @NotNull String toString() {
+    public @NotNull
+    String toString() {
         return "---AfterTomorrow---" +
                 "\ntimes=" + Arrays.toString(times) +
                 "\noonIllumination=" + moonIllumination +

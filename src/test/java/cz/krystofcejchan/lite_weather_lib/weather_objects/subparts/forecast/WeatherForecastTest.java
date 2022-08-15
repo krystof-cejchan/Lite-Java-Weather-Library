@@ -24,4 +24,12 @@ class WeatherForecastTest {
 
        System.out.println(new NearestArea("Náchod").getAreaInfo().toString());
     }
+
+    @Test
+    void testGetForecastFor() throws IOException {
+        WeatherForecast w =new WeatherForecast("Náchod",DAY.ALL,TIME.ALL);
+        w.getForecastFor(DAY.TODAY,TIME.AM_9).print();
+
+
+    }
 }

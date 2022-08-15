@@ -10,7 +10,7 @@ class WeatherObjectTest {
 
     @Test
     void getAll() throws IOException {
-        WeatherObject weatherObject = new WeatherObject("Mexico City", DAY.ALL, TIME.AM_6, TIME.AM_9);
+        WeatherObject weatherObject = new WeatherObject("Mexico Cithnhhy", DAY.ALL, TIME.AM_6, TIME.AM_9);
         System.out.println(weatherObject.getWeatherForecast().getForecastFor(DAY.TOMORROW, TIME.AM_9));
         //System.out.println(weatherObject.getJsonAsText());
         System.out.println(weatherObject.getCurrentCondition().getVisibility());

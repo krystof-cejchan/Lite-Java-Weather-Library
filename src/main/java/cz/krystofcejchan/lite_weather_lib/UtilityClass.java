@@ -2,8 +2,11 @@ package cz.krystofcejchan.lite_weather_lib;
 
 import com.google.common.net.UrlEscapers;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CannotCreateInstance;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NotFoundLocation;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.WeatherDataNotAccessible;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -26,7 +29,7 @@ public class UtilityClass {
         throw new CannotCreateInstance("This class serves as a utility class according to the design pattern of Utility Class");
     }
 
-    public static LocalTime stringToLocalTime(StringBuilder time) {
+    public static LocalTime stringToLocalTime(@NotNull StringBuilder time) {
         int[] hour_minutes = new int[2];
         boolean pm = time.toString().contains("PM");
         for (int i = 0; i < hour_minutes.length; i++) {
@@ -39,7 +42,7 @@ public class UtilityClass {
         return LocalTime.of(hour_minutes[0], hour_minutes[1]);
     }
 
-    public static LocalDateTime stringToDateTime(StringBuilder date) {
+    public static LocalDateTime stringToDateTime(@NotNull StringBuilder date) {
 
         int[] year_month_day = new int[3];
         int[] hour_minutes = new int[2];
@@ -64,7 +67,7 @@ public class UtilityClass {
                 hour_minutes[1]);
     }
 
-    public static LocalDate stringToDate(StringBuilder date) {
+    public static LocalDate stringToDate(@NotNull StringBuilder date) {
         int[] year_month_day = new int[3];
         for (int i = 0; i < year_month_day.length; i++) {
             year_month_day[i] = Integer.parseInt((date.substring(0, year_month_day.length - 1 == i ? date.length() : date.indexOf("-"))));
@@ -73,11 +76,17 @@ public class UtilityClass {
         return LocalDate.of(year_month_day[0], year_month_day[1], year_month_day[2]);
     }
 
-    public static JSONObject getJson(String location) throws IOException {
-        return new JSONObject(IOUtils.toString(
-                new URL(UrlEscapers
-                        .urlFragmentEscaper().escape("https://wttr.in/" + location + "?format=j1")),
-                StandardCharsets.UTF_8));
+    public static JSONObject getJson(@NotNull String location) throws NotFoundLocation {
+        try {
+            String jsonSource = IOUtils.toString(
+                    new URL(UrlEscapers
+                            .urlFragmentEscaper().escape("https://wttr.in/" + location + "?format=j1")),
+                    StandardCharsets.UTF_8);
+            return new JSONObject(jsonSource);
+        } catch (IOException e) {
+            throw new NotFoundLocation("It seems the location you entered could not be found");
+        }
+
     }
 
     /**
@@ -94,7 +103,7 @@ public class UtilityClass {
             return listOfAllDaysAndItsTimes;
         }
 
-        public static void addToListOfAllDaysAndItsTimes(ForecastAtHour forecast) {
+        public static void addToListOfAllDaysAndItsTimes(@NotNull ForecastAtHour forecast) {
             if (listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getDay).toList().contains(forecast.getDay())
                     && listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getTime).toList().contains(forecast.getTime()))
                 return;
@@ -106,7 +115,7 @@ public class UtilityClass {
             listOfAllDaysAndItsTimes.clear();
         }
 
-        public static void removeElement(ForecastAtHour forecast) {
+        public static void removeElement(@NotNull ForecastAtHour forecast) {
             listOfAllDaysAndItsTimes.remove(forecast);
         }
     }
@@ -121,7 +130,7 @@ public class UtilityClass {
          * @param link web URL
          * @return true if link is truly link, else false
          */
-        public static boolean isLink(String link) {
+        public static boolean isLink(@NotNull String link) {
             String urlRegex = "((http://|https://)?(www.)?(([a-zA-Z0-9-]){2,}\\.){1,4}([a-zA-Z]){2,6}(/([a-zA-Z-_/.0-9#:?=&;,]*)?)?)";
             return Pattern.compile(urlRegex).matcher(link).find();
         }
@@ -132,7 +141,7 @@ public class UtilityClass {
          * @param webUrl webpage url
          * @return text from webpage
          */
-        public static String getTextFromWebpage(String webUrl) {
+        public static String getTextFromWebpage(@NotNull String webUrl) {
             try {
                 if (!WebPageReader.isLink(webUrl)) return null;
                 Scanner sc = new Scanner(new URL(webUrl).openStream());
@@ -143,8 +152,7 @@ public class UtilityClass {
                 sc.close();
                 return sb.toString().replaceAll("<[^>]*>", "");
             } catch (IOException e) {
-                e.printStackTrace();
-                return null;
+                throw new WeatherDataNotAccessible("Weather data could not be accessed; try again later");
             }
         }
     }
