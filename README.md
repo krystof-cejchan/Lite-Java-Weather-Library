@@ -25,7 +25,7 @@ A Java Library for better and easier worldwide Weather data including current co
     - [Description](#description-4)
     - [Example](#example-2)
 
-# Install & requirements
+# Installation & requirements
 [Maven central](https://search.maven.org/artifact/cz.krystofcejchan/lite_weather_library/1.0.0/jar)
 
 
@@ -250,4 +250,4 @@ Request{query='Lat 59.91 and Lon 10.74', type='LatLon'}
 # Data source / disclaimer 
 *All weather data taken from https://wttr.in/,
 Copyright (c) https://github.com/chubin/wttr.in .*
-**No changes in original repository**
+
