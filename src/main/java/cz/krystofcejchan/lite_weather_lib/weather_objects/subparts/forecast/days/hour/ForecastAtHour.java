@@ -283,8 +283,7 @@ public final class ForecastAtHour {
      * prints current object.toString to the console
      */
     public void print() {
-        MethodRefPrint<ForecastAtHour> a = new MethodRefPrint<>(this);
-        a.print();
+        new MethodRefPrint<>(this).print();
     }
 
     @Override

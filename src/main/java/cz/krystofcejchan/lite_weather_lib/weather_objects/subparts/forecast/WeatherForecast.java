@@ -13,6 +13,7 @@ import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -175,7 +176,8 @@ public class WeatherForecast {
     /**
      * @return all saved forecasts
      */
-    public List<ForecastAtHour> getAllSavedForecasts() {
+    public @CheckForNull
+    List<ForecastAtHour> getAllSavedForecasts() {
         return new ArrayList<>(UtilityClass.Storage.getListOfAllDaysAndItsTimes());
     }
 
@@ -183,8 +185,7 @@ public class WeatherForecast {
      * prints current object.toString to the console
      */
     public void print() {
-        MethodRefPrint<WeatherForecast> a = new MethodRefPrint<>(this);
-        a.print();
+        new MethodRefPrint<>(this).print();
     }
 
     /**

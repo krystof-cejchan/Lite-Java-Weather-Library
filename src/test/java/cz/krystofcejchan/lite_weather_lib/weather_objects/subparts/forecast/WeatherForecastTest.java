@@ -14,7 +14,7 @@ class WeatherForecastTest {
 
     @Test
     void getForecastFor() throws IOException {
-       CurrentCondition c = new CurrentCondition("Náchod");
+        CurrentCondition c = new CurrentCondition("Náchod");
         System.out.println(c);
 
         WeatherObject w = new WeatherObject("Paris", new TIME[]{TIME.AM_9}, DAY.TODAY);
@@ -22,13 +22,13 @@ class WeatherForecastTest {
 
         System.out.println(new Today("Náchod", TIME.AM_9, TIME.AM_12));
 
-       System.out.println(new NearestArea("Náchod").getAreaInfo().toString());
+        System.out.println(new NearestArea("Náchod").getAreaInfo().toString());
     }
 
     @Test
     void testGetForecastFor() throws IOException {
-        WeatherForecast w =new WeatherForecast("Náchod",DAY.ALL,TIME.ALL);
-        w.getForecastFor(DAY.TODAY,TIME.AM_9).print();
+        WeatherForecast w = new WeatherForecast("Náchod", DAY.ALL, TIME.ALL);
+        w.getForecastFor(DAY.TODAY, TIME.AM_9).print();
 
 
     }

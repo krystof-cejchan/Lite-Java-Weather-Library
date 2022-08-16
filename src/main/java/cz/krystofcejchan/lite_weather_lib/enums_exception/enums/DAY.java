@@ -1,5 +1,7 @@
 package cz.krystofcejchan.lite_weather_lib.enums_exception.enums;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,7 +10,22 @@ import java.util.Arrays;
  * <br> TODAY, TOMORROW, AFTER_TOMORROW, ALL;
  */
 public enum DAY {
-    TODAY, TOMORROW, AFTER_TOMORROW, ALL;
+    /**
+     * today
+     */
+    TODAY,
+    /**
+     * tomorrow
+     */
+    TOMORROW,
+    /**
+     * the day after tomorrow
+     */
+    AFTER_TOMORROW,
+    /**
+     * all days
+     */
+    ALL;
 
     /**
      * case TODAY -> 0;
@@ -27,8 +44,13 @@ public enum DAY {
             case ALL -> -1;
         };
     }
-
-    public static java.util.List<DAY> getAllDaysExcept(DAY day) {
+    /**
+     * returns all {@link DAY} values expect the one included in param
+     *
+     * @param day TIME to be excluded
+     * @return {@link java.util.List} of all {@link DAY}s except param
+     */
+    public static java.util.List<DAY> getAllDaysExcept(@NotNull DAY day) {
         return new ArrayList<>(Arrays.stream(values()).filter(it -> !it.equals(ALL)).toList());
     }
 }

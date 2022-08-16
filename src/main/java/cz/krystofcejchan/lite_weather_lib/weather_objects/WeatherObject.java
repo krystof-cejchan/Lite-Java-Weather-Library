@@ -3,7 +3,7 @@ package cz.krystofcejchan.lite_weather_lib.weather_objects;
 import cz.krystofcejchan.lite_weather_lib.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
-import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NotFoundLocation;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.current_weather.CurrentCondition;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.WeatherForecast;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea;
@@ -43,7 +43,7 @@ public final class WeatherObject {
         this(location, times, day);
     }
 
-    public WeatherObject(String location, TIME[] times, DAY... days) throws IOException, NotFoundLocation {
+    public WeatherObject(String location, TIME[] times, DAY... days) throws IOException, CouldNotFindLocation {
         this.json = UtilityClass.getJson(location);
         this.jsonAsText = UtilityClass.WebPageReader.getTextFromWebpage("https://wttr.in/" + location + "?format=j1");
         this.location = location;
@@ -123,8 +123,7 @@ public final class WeatherObject {
      * prints current object.toString to the console
      */
     public void print() {
-        MethodRefPrint<WeatherObject> a = new MethodRefPrint<>(this);
-        a.print();
+        new MethodRefPrint<>(this).print();
     }
 
     @Override

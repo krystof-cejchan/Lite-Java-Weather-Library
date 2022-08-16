@@ -4,7 +4,7 @@ import cz.krystofcejchan.lite_weather_lib.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
-import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NotFoundLocation;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
@@ -12,7 +12,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -46,7 +45,14 @@ public final class AfterTomorrow implements IForecastDayTimesAndDays {
      */
     final private TIME[] times;
 
-    public AfterTomorrow(@NotNull String location, @NotNull TIME... times) throws NotFoundLocation {
+    /**
+     * constructor
+     *
+     * @param location location for which you want the forecast
+     * @param times    time for which you want the forest
+     * @throws CouldNotFindLocation if location could not be found
+     */
+    public AfterTomorrow(@NotNull String location, @NotNull TIME... times) throws CouldNotFindLocation {
         if (Arrays.asList(times).contains(TIME.ALL)) {
             times = Arrays.stream(TIME.values()).filter(time -> !time.equals(TIME.ALL)).toList().toArray(new TIME[0]);
         }
@@ -183,8 +189,7 @@ public final class AfterTomorrow implements IForecastDayTimesAndDays {
      * prints current object.toString to the console
      */
     public void print() {
-        MethodRefPrint<AfterTomorrow> a = new MethodRefPrint<>(this);
-        a.print();
+        new MethodRefPrint<>(this).print();
     }
 
     @Contract(pure = true)

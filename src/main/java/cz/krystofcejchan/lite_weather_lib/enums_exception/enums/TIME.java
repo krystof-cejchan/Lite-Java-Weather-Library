@@ -1,5 +1,7 @@
 package cz.krystofcejchan.lite_weather_lib.enums_exception.enums;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,7 +11,42 @@ import java.util.Arrays;
  * AM_3, AM_6, AM_9, AM_12, PM_3, PM_6, PM_9, PM_12, ALL;
  */
 public enum TIME {
-    AM_3, AM_6, AM_9, AM_12, PM_3, PM_6, PM_9, PM_12, ALL;
+    /**
+     * 3:00 a.m.
+     */
+    AM_3,
+    /**
+     * 6:00 a.m.
+     */
+    AM_6,
+    /**
+     * 9:00 a.m.
+     */
+    AM_9,
+    /**
+     * noon
+     */
+    AM_12,
+    /**
+     * 3:00 p.m.
+     */
+    PM_3,
+    /**
+     * 6:00 p.m.
+     */
+    PM_6,
+    /**
+     * 9:00 p.m.
+     */
+    PM_9,
+    /**
+     * midnight
+     */
+    PM_12,
+    /**
+     * all times
+     */
+    ALL;
 
     /**
      * case PM_12 -> 0;
@@ -39,7 +76,13 @@ public enum TIME {
         };
     }
 
-    public static java.util.List<TIME> getAllEnumsExcept(TIME time) {
+    /**
+     * returns all {@link TIME} values expect the one included in param
+     *
+     * @param time TIME to be excluded
+     * @return {@link java.util.List} of all {@link TIME}s except param
+     */
+    public static java.util.List<TIME> getAllEnumsExcept(@NotNull TIME time) {
         return new ArrayList<>(Arrays.stream(values()).filter(it -> !it.equals(time)).toList());
     }
 }

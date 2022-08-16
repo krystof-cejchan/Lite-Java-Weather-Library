@@ -15,8 +15,7 @@ public record AreaInfo(String name, String latitude, String longitude,
      * prints current object.toString to the console
      */
     public void print() {
-        MethodRefPrint<AreaInfo> a = new MethodRefPrint<>(this);
-        a.print();
+        new MethodRefPrint<>(this).print();
     }
 
     @Override

@@ -28,7 +28,8 @@ public interface IForecastDayTimesAndDays {
      *                                      or include {@link TIME} and {@link DAY} you want to know the forecast for in the constructor when creating forecast object or its subclasses
      * @throws CannotSearchForAll           {@link DAY} or {@link TIME} is set to ALL; you can get single object of {@link ForecastAtHour} only for certain DAY and TIME
      */
-    static @NotNull ForecastAtHour getMatchingObjectFrom(DAY day, TIME time) throws NoDataFoundForThisDayAndTime, CannotSearchForAll {
+    static @NotNull
+    ForecastAtHour getMatchingObjectFrom(DAY day, TIME time) throws NoDataFoundForThisDayAndTime, CannotSearchForAll {
         if (day.equals(DAY.ALL) || time.equals(TIME.ALL))
             throw new CannotSearchForAll("In order to get Forecast for certain hour, you need to pass any DAY or TIME except ALL");
 

@@ -4,6 +4,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
+/**
+ * prints object to the console, if possible object.toString() will be printed
+ *
+ * @param <T> Generics
+ */
 public class MethodRefPrint<T> {
     T t;
 
@@ -11,8 +16,11 @@ public class MethodRefPrint<T> {
         this.t = t;
     }
 
+    /**
+     * prints object to the console using Functional Interface
+     */
     public void print() {
-        Consumer<T> fPrint = System.out::println;
-        fPrint.accept(this.t);
+        Consumer<T> pRef = System.out::println;
+        pRef.accept(t);
     }
 }

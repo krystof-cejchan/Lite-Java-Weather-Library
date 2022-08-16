@@ -2,7 +2,7 @@ package cz.krystofcejchan.lite_weather_lib;
 
 import com.google.common.net.UrlEscapers;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CannotCreateInstance;
-import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NotFoundLocation;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.WeatherDataNotAccessible;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import org.apache.commons.io.IOUtils;
@@ -76,7 +76,7 @@ public class UtilityClass {
         return LocalDate.of(year_month_day[0], year_month_day[1], year_month_day[2]);
     }
 
-    public static JSONObject getJson(@NotNull String location) throws NotFoundLocation {
+    public static JSONObject getJson(@NotNull String location) throws CouldNotFindLocation {
         try {
             String jsonSource = IOUtils.toString(
                     new URL(UrlEscapers
@@ -84,7 +84,7 @@ public class UtilityClass {
                     StandardCharsets.UTF_8);
             return new JSONObject(jsonSource);
         } catch (IOException e) {
-            throw new NotFoundLocation("It seems the location you entered could not be found");
+            throw new CouldNotFindLocation("It seems the location you entered could not be found");
         }
 
     }

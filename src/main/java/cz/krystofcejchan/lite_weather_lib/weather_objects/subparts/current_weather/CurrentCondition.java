@@ -1,7 +1,7 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.current_weather;
 
 import cz.krystofcejchan.lite_weather_lib.UtilityClass;
-import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NotFoundLocation;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -58,7 +58,7 @@ public final class CurrentCondition {
      *
      * @param location {@link String} location / area you want to get the forecast for
      */
-    public CurrentCondition(@NotNull String location) throws NotFoundLocation {
+    public CurrentCondition(@NotNull String location) throws CouldNotFindLocation {
 
         //main json object for current condition
         JSONObject current_condition = UtilityClass.getJson(location).getJSONArray("current_condition").getJSONObject(0);
@@ -293,8 +293,7 @@ public final class CurrentCondition {
      * prints current object.toString to the console
      */
     public void print() {
-        MethodRefPrint<CurrentCondition> a = new MethodRefPrint<>(this);
-        a.print();
+        new MethodRefPrint<>(this).print();
     }
 
     @Override
