@@ -1,10 +1,11 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days;
 
-import cz.krystofcejchan.lite_weather_lib.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
-import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
+import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
+import cz.krystofcejchan.lite_weather_lib.utilities.IsNumeric;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.IForecastDayTimesAndDays;
@@ -47,7 +48,13 @@ public final class Today implements IForecastDayTimesAndDays {
 
     public Today(@NotNull String location, @NotNull TIME... times) throws CouldNotFindLocation {
         if (Arrays.asList(times).contains(TIME.ALL)) {
-            times = Arrays.stream(TIME.values()).filter(time -> !time.equals(TIME.ALL)).toList().toArray(new TIME[0]);
+            ArrayList<TIME> t = new ArrayList<>();
+            for (TIME time : TIME.values()
+            ) {
+                if (!time.equals(TIME.ALL))
+                    t.add(time);
+            }
+            times = t.toArray(new TIME[0]);
         }
         this.times = times;
         JSONObject jsonObject = UtilityClass.getJson(location);
@@ -55,10 +62,14 @@ public final class Today implements IForecastDayTimesAndDays {
                 .getJSONObject(0);
         moonIllumination = daily.getInt("moon_illumination");
         moonPhase = daily.getString("moon_phase");
-        moonRise = UtilityClass.stringToLocalTime(new StringBuilder(daily.getString("moonrise")));
-        moonSet = UtilityClass.stringToLocalTime(new StringBuilder(daily.getString("moonset")));
-        sunRise = UtilityClass.stringToLocalTime(new StringBuilder(daily.getString("sunrise")));
-        sunSet = UtilityClass.stringToLocalTime(new StringBuilder(daily.getString("sunset")));
+        moonRise = IsNumeric.containsNumbers(daily.getString("moonrise")) ? UtilityClass.stringToLocalTime(
+                new StringBuilder(daily.getString("moonrise"))) : null;
+        moonSet = IsNumeric.containsNumbers(daily.getString("moonset")) ? UtilityClass.stringToLocalTime(
+                new StringBuilder(daily.getString("moonset"))) : null;
+        sunRise = IsNumeric.containsNumbers(daily.getString("sunrise")) ? UtilityClass.stringToLocalTime(
+                new StringBuilder(daily.getString("sunrise"))) : null;
+        sunSet = IsNumeric.containsNumbers(daily.getString("sunset")) ? UtilityClass.stringToLocalTime(
+                new StringBuilder(daily.getString("sunset"))) : null;
         daily = jsonObject.getJSONArray("weather").getJSONObject(0);
         averageTemperatureC = daily.getInt("avgtempC");
         averageTemperatureF = daily.getInt("avgtempF");

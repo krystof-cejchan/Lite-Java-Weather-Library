@@ -9,7 +9,7 @@ class NearestAreaTest {
     @Test
     void NearestArea() throws IOException {
         NearestArea nearestArea = new NearestArea("Dallas");
-        System.out.println(nearestArea.getCountry() + ", " + nearestArea.getAreaInfo().region() + ", " + nearestArea.getAreaInfo().name());
+        System.out.println(nearestArea.getCountry() + ", " + nearestArea.getAreaInfo().getRegion() + ", " + nearestArea.getAreaInfo().getName());
         System.out.println(nearestArea.toString());
     }
 }

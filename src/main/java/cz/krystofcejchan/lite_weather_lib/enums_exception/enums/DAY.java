@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * DAYs for weather forecast
@@ -50,7 +52,7 @@ public enum DAY {
      * @param day TIME to be excluded
      * @return {@link java.util.List} of all {@link DAY}s except param
      */
-    public static java.util.List<DAY> getAllDaysExcept(@NotNull DAY day) {
-        return new ArrayList<>(Arrays.stream(values()).filter(it -> !it.equals(ALL)).toList());
+    public static List<DAY> getAllDaysExcept(@NotNull DAY day) {
+        return Arrays.stream(values()).filter(it -> !it.equals(ALL)).collect(Collectors.toList());
     }
 }

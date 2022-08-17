@@ -9,8 +9,37 @@ import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
  * @author krystof-cejchan
  * @version 17
  */
-public record AreaInfo(String name, String latitude, String longitude,
-                       String population, String region) {
+public class AreaInfo {
+    final private String name, latitude, longitude, population, region;
+
+    public AreaInfo(String name, String latitude, String longitude, String population, String region) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.population = population;
+        this.region = region;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public String getPopulation() {
+        return population;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
     /**
      * prints current object.toString to the console
      */

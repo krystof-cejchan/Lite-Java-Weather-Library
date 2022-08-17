@@ -9,8 +9,8 @@ public class TestOfAllTests {
 
     @org.junit.jupiter.api.Test
     void test() throws IOException {
-        WeatherObject weatherObject = new WeatherObject("Mexico City", DAY.ALL, TIME.AM_6, TIME.AM_9);
+        WeatherObject weatherObject = new WeatherObject("Mexico City", DAY.ALL, TIME.ALL);
         //  Objects.requireNonNull(weatherObject.getWeatherForecast().getAllSavedForecasts()).forEach(System.out::println);
-        weatherObject.getWeatherForecast().getAllForecastForAllDayAndAllTime().forEach((k, v) -> System.out.println(k + "→" + v));
+        weatherObject.getWeatherForecast().getForecastFor(DAY.TODAY,TIME.AM_6).print();
     }
 }

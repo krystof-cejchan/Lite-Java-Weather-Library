@@ -1,6 +1,6 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects;
 
-import cz.krystofcejchan.lite_weather_lib.UtilityClass;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;

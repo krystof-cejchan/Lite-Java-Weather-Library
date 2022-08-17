@@ -1,4 +1,4 @@
-package cz.krystofcejchan.lite_weather_lib;
+package cz.krystofcejchan.lite_weather_lib.utilities;
 
 import com.google.common.net.UrlEscapers;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CannotCreateInstance;
@@ -7,6 +7,7 @@ import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.WeatherData
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Utility Class representing <b>design pattern</b> of the same name
@@ -29,7 +31,15 @@ public class UtilityClass {
         throw new CannotCreateInstance("This class serves as a utility class according to the design pattern of Utility Class");
     }
 
+    /**
+     * returns {@link LocalTime} from {@link StringBuilder}.toString; can be null if {@link StringBuilder} does not contain any numbers or is null
+     *
+     * @param time {@link StringBuilder} as text
+     * @return LocalTime if possible, else null
+     */
+    @Nullable
     public static LocalTime stringToLocalTime(@NotNull StringBuilder time) {
+        if (!IsNumeric.containsNumbers(time.toString())) return null;
         int[] hour_minutes = new int[2];
         boolean pm = time.toString().contains("PM");
         for (int i = 0; i < hour_minutes.length; i++) {
@@ -104,8 +114,8 @@ public class UtilityClass {
         }
 
         public static void addToListOfAllDaysAndItsTimes(@NotNull ForecastAtHour forecast) {
-            if (listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getDay).toList().contains(forecast.getDay())
-                    && listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getTime).toList().contains(forecast.getTime()))
+            if (listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getDay).collect(Collectors.toList()).contains(forecast.getDay())
+                    && listOfAllDaysAndItsTimes.stream().map(ForecastAtHour::getTime).collect(Collectors.toList()).contains(forecast.getTime()))
                 return;
 
             listOfAllDaysAndItsTimes.add(forecast);

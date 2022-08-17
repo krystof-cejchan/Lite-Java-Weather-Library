@@ -1,6 +1,6 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast;
 
-import cz.krystofcejchan.lite_weather_lib.UtilityClass;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDay;
@@ -53,12 +53,12 @@ public class WeatherForecast {
         AfterTomorrow tomorrowAfterHelper = null;
 
         //filtering the arraylists
-        List<TIME> timeList = new ArrayList<>(Arrays.stream(times).toList()).stream().distinct().collect(Collectors.toList());
-        List<DAY> dayList = new ArrayList<>(Arrays.stream(days).toList()).stream().distinct().collect(Collectors.toList());
+        List<TIME> timeList = new ArrayList<>(Arrays.stream(times).collect(Collectors.toList())).stream().distinct().collect(Collectors.toList());
+        List<DAY> dayList = new ArrayList<>(Arrays.stream(days).collect(Collectors.toList())).stream().distinct().collect(Collectors.toList());
         if (dayList.contains(DAY.ALL))
-            dayList = new ArrayList<>(Arrays.stream(DAY.values()).toList().stream().filter(day -> !day.equals(DAY.ALL)).toList());
+            dayList = Arrays.stream(DAY.values()).collect(Collectors.toList()).stream().filter(day -> !day.equals(DAY.ALL)).collect(Collectors.toList());
         if (timeList.contains(TIME.ALL))
-            timeList = new ArrayList<>(Arrays.stream(TIME.values()).toList().stream().filter(time -> !time.equals(TIME.ALL)).toList());
+            timeList = Arrays.stream(TIME.values()).collect(Collectors.toList()).stream().filter(time -> !time.equals(TIME.ALL)).collect(Collectors.toList());
 
         TIME[] timesBackToArray = timeList.toArray(new TIME[0]);
         this.times = timesBackToArray;
