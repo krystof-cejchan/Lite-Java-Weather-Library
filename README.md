@@ -32,20 +32,20 @@ A Java Library for better and easier worldwide Weather data including current co
 * [JavaDoc](https://krystofcejchan.cz/projects/documentations/Lite-Java-Weather-Library/index.html)
 
 **Requirements**
-1) Java: 17
+1) Java: 15
 2) Internet connection
 ## Apache Maven
 ```xml
 <dependency>
   <groupId>cz.krystofcejchan</groupId>
   <artifactId>lite_weather_library</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
 ## Gradle Groovy DSL
 ```groovy
-implementation 'cz.krystofcejchan:lite_weather_library:1.0.0'
+implementation 'cz.krystofcejchan:lite_weather_library:1.1.0'
 ```
 # How to use
 
@@ -56,9 +56,9 @@ Create an object of `WeatherObject` to access all the data! From this object you
 ### Example
 ```java
 WeatherObject weatherObject = new WeatherObject("Mexico City", DAY.ALL, TIME.AM_6, TIME.AM_9);
-        System.out.println(weatherObject.getWeatherForecast().getForecastFor(DAY.TOMORROW, TIME.AM_9));
+System.out.println(weatherObject.getWeatherForecast().getForecastFor(DAY.TOMORROW, TIME.AM_9));
 //System.out.println(weatherObject.getJsonAsText());
-        System.out.println(weatherObject.getCurrentCondition().getVisibility());
+System.out.println(weatherObject.getCurrentCondition().getVisibility());
 ```
 Output:
 ```css
@@ -116,7 +116,7 @@ Create an object of `CurrentCondition` to access all the data for current condit
 ### Example
 ```java
 CurrentCondition currentCondition = new CurrentCondition("Dublin");
-        System.out.println(currentCondition);
+System.out.println(currentCondition);
 ```
 Output:
 ```css
@@ -155,13 +155,13 @@ Create an object of `WeatherForecast` to access all the data for weather forecas
 //create a WeatherForecast object for City of Denver, for all days and times  
 WeatherForecast weatherForecast = new WeatherForecast("Denver", DAY.ALL, TIME.ALL);
 //search for forecast for the day after tomorrow at 6 am  
-        String toString=weatherForecast.getForecastFor(DAY.AFTER_TOMORROW,TIME.AM_6).toString();
+String toString=weatherForecast.getForecastFor(DAY.AFTER_TOMORROW,TIME.AM_6).toString();
 //get average temperature for tomorrow in Celsius  
-        int averageTemperatureCForTomorrow =weatherForecast.getTomorrow().getAverageTemperatureC();
+int averageTemperatureCForTomorrow =weatherForecast.getTomorrow().getAverageTemperatureC();
 //get temperature for today at 3 pm in Fahrenheit  
-        int temperatureFTodayAt3pm = weatherForecast.getForecastFor(DAY.TODAY,TIME.PM_3).getTemperatureF();
+int temperatureFTodayAt3pm = weatherForecast.getForecastFor(DAY.TODAY,TIME.PM_3).getTemperatureF();
 
-        System.out.println(toString + "\n\n" + "average temperature for tomorrow: " +
+System.out.println(toString + "\n\n" + "average temperature for tomorrow: " +
         averageTemperatureCForTomorrow + "\n" + "temperature for today at 3 pm: " + temperatureFTodayAt3pm); 
 ```
 Output:
@@ -220,8 +220,8 @@ Create an object of `NearestArea` to access all the data regarding the city/town
 ### Examples
 ```java
 NearestArea nearestArea = new NearestArea("Dallas");
-        System.out.println(nearestArea.getCountry() + ", " + nearestArea.getAreaInfo().region() + ", " + nearestArea.getAreaInfo().name());
-        System.out.println(nearestArea.toString());
+System.out.println(nearestArea.getCountry() + ", " + nearestArea.getAreaInfo().region() + ", " + nearestArea.getAreaInfo().name());
+System.out.println(nearestArea.toString());
 ```
 Output:
 ```css
@@ -243,15 +243,17 @@ Create an object `Request` to get location request data, mainly Latitude and Lon
 ### Example
 ```java
 Request request = new Request("Oslo");
-        System.out.println(request.toString());
+System.out.println(request.toString());
 ```
 Output:
 ```css
 Request{query='Lat 59.91 and Lon 10.74', type='LatLon'}
 ```
 ## Exceptions
+[Documentation](https://krystofcejchan.cz/projects/documentations/Lite-Java-Weather-Library/cz/krystofcejchan/lite_weather_lib/enums_exception/exceptions/package-summary.html)
 
 # Data source / disclaimer
-*All weather data taken from https://wttr.in/,
-Copyright (c) https://github.com/chubin/wttr.in .*
-**No changes in original repository**
+*All weather data taken from https://wttr.in/*
+
+
+(c) https://github.com/krystof-cejchan
