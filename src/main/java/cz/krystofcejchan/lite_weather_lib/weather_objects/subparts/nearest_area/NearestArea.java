@@ -1,6 +1,6 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area;
 
-import cz.krystofcejchan.lite_weather_lib.UtilityClass;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.details.AreaInfo;

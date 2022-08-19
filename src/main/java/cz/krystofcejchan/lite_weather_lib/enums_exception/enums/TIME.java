@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * TIMES for weather forecast
@@ -83,6 +84,6 @@ public enum TIME {
      * @return {@link java.util.List} of all {@link TIME}s except param
      */
     public static java.util.List<TIME> getAllEnumsExcept(@NotNull TIME time) {
-        return new ArrayList<>(Arrays.stream(values()).filter(it -> !it.equals(time)).toList());
+        return Arrays.stream(values()).filter(it -> !it.equals(time)).collect(Collectors.toList());
     }
 }
