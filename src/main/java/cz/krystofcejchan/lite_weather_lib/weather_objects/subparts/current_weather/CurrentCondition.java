@@ -1,7 +1,7 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.current_weather;
 
-import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
@@ -18,6 +18,8 @@ import java.util.Locale;
  */
 public final class CurrentCondition {
 
+
+    private final String location;
     private final int feelsLikeC;
     private final int feelsLikeF;
     private final int cloudCover;
@@ -59,7 +61,7 @@ public final class CurrentCondition {
      * @param location {@link String} location / area you want to get the forecast for
      */
     public CurrentCondition(@NotNull String location) throws CouldNotFindLocation {
-
+        this.location = location;
         //main json object for current condition
         JSONObject current_condition = UtilityClass.getJson(location).getJSONArray("current_condition").getJSONObject(0);
 
@@ -294,6 +296,14 @@ public final class CurrentCondition {
      */
     public void print() {
         new MethodRefPrint<>(this).print();
+    }
+    /**
+     *
+     * @return location provided in the constructor of this class or its parent class <br>
+     * if you need to get more detailed information, use {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea}
+     */
+    public String getLocation() {
+        return location;
     }
 
     @Override

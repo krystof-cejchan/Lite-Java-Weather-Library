@@ -25,6 +25,7 @@ import java.util.*;
  */
 public final class Today implements IForecastDayTimesAndDays {
 
+    final private String location;
     final private int moonIllumination;
     final private String moonPhase;
     final private LocalTime moonRise;
@@ -47,6 +48,7 @@ public final class Today implements IForecastDayTimesAndDays {
     private final TIME[] times;
 
     public Today(@NotNull String location, @NotNull TIME... times) throws CouldNotFindLocation {
+        this.location = location;
         if (Arrays.asList(times).contains(TIME.ALL)) {
             ArrayList<TIME> t = new ArrayList<>();
             for (TIME time : TIME.values()
@@ -100,6 +102,7 @@ public final class Today implements IForecastDayTimesAndDays {
         return times;
     }
 
+    @NotNull
     @Override
     public ForecastAtHour getForecastByTime(@NotNull TIME time) throws NoDataFoundForThisDayAndTime {
         return IForecastDayTimesAndDays.getMatchingObjectFrom(getDay(), time);
@@ -110,6 +113,7 @@ public final class Today implements IForecastDayTimesAndDays {
      *
      * @return map of time and forecast
      */
+    @NotNull
     public Map<TIME, ForecastAtHour> getAllForecastsForToday() {
         Map<TIME, ForecastAtHour> map = new HashMap<>();
         for (TIME time : getTime()) {
@@ -148,10 +152,6 @@ public final class Today implements IForecastDayTimesAndDays {
 
     public int getAverageTemperatureC() {
         return averageTemperatureC;
-    }
-
-    public int getaverageTemperatureF() {
-        return averageTemperatureF;
     }
 
     public LocalDate getDate() {
@@ -199,6 +199,22 @@ public final class Today implements IForecastDayTimesAndDays {
      */
     public void print() {
         new MethodRefPrint<>(this).print();
+    }
+    /**
+     *
+     * @return location provided in the constructor of this class or its parent class <br>
+     * if you need to get more detailed information, use {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea}
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    public int getAverageTemperatureF() {
+        return averageTemperatureF;
+    }
+
+    public TIME[] getTimes() {
+        return times;
     }
 
     @Contract(pure = true)

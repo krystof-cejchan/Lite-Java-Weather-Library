@@ -34,7 +34,7 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
      * times provided to the constructor<br> <b>duplicate items will be eventually removed -there will be unique TIMEs in the array</b>
      */
     private final TIME[] times;
-
+    private final String location;
     final private int moonIllumination;
     final private String moonPhase;
     final private LocalTime moonRise;
@@ -50,6 +50,7 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
     final private int uvIndex;
 
     public Tomorrow(@NotNull String location, @NotNull TIME... times) throws CouldNotFindLocation {
+        this.location=location;
         if (Arrays.asList(times).contains(TIME.ALL)) {
             times = Arrays.stream(TIME.values()).filter(time -> !time.equals(TIME.ALL)).toArray(TIME[]::new);
         }
@@ -190,6 +191,18 @@ public final class Tomorrow implements IForecastDayTimesAndDays {
      */
     public void print() {
         new MethodRefPrint<>(this).print();
+    }
+
+    public TIME[] getTimes() {
+        return times;
+    }
+    /**
+     *
+     * @return location provided in the constructor of this class or its parent class <br>
+     * if you need to get more detailed information, use {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea}
+     */
+    public String getLocation() {
+        return location;
     }
 
     @Contract(pure = true)

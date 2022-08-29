@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
  */
 public final class AfterTomorrow implements IForecastDayTimesAndDays {
 
+    final private String location;
     final private int moonIllumination;
     final private String moonPhase;
     final private LocalTime moonRise;
@@ -55,6 +56,7 @@ public final class AfterTomorrow implements IForecastDayTimesAndDays {
      * @throws CouldNotFindLocation if location could not be found
      */
     public AfterTomorrow(@NotNull String location, @NotNull TIME... times) throws CouldNotFindLocation {
+        this.location=location;
         if (Arrays.asList(times).contains(TIME.ALL)) {
             times = Arrays.stream(TIME.values()).filter(time -> !time.equals(TIME.ALL)).toArray(TIME[]::new);
         }
@@ -189,6 +191,19 @@ public final class AfterTomorrow implements IForecastDayTimesAndDays {
 
     public int getUvIndex() {
         return uvIndex;
+    }
+
+    /**
+     *
+     * @return location provided in the constructor of this class or its parent class <br>
+     * if you need to get more detailed information, use {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea}
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    public TIME[] getTimes() {
+        return times;
     }
 
     /**

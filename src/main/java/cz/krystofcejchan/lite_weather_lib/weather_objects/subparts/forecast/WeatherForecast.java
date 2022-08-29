@@ -1,10 +1,10 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast;
 
-import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDay;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.AfterTomorrow;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.Today;
@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
  * @version 17
  */
 public class WeatherForecast {
+
+    private final String location;
     private final Today today;
     private final Tomorrow tomorrow;
     private final AfterTomorrow tomorrowAfter;
@@ -48,6 +50,7 @@ public class WeatherForecast {
     }
 
     public WeatherForecast(@NotNull String location, @NotNull TIME[] times, @NotNull DAY... days) throws IOException {
+        this.location = location;
         Today todayHelper = null;
         Tomorrow tomorrowHelper = null;
         AfterTomorrow tomorrowAfterHelper = null;
@@ -171,6 +174,14 @@ public class WeatherForecast {
      */
     public TIME[] getTimes() {
         return times;
+    }
+    /**
+     *
+     * @return location provided in the constructor of this class or its parent class <br>
+     * if you need to get more detailed information, use {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea}
+     */
+    public String getLocation() {
+        return location;
     }
 
     /**

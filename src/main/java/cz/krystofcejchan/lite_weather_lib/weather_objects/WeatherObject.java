@@ -113,7 +113,9 @@ public final class WeatherObject {
     }
 
     /**
-     * @return location from constructor
+     *
+     * @return location provided in the constructor of this class or its parent class <br>
+     * if you need to get more detailed information, use {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea}
      */
     public String getLocation() {
         return location;
