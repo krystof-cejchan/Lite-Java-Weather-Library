@@ -39,13 +39,13 @@ A Java Library for better and easier worldwide Weather data including current co
 <dependency>
   <groupId>cz.krystofcejchan</groupId>
   <artifactId>lite_weather_library</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
 </dependency>
 ```
 
 ## Gradle Groovy DSL
 ```groovy
-implementation 'cz.krystofcejchan:lite_weather_library:1.1.0'
+implementation 'cz.krystofcejchan:lite_weather_library:1.1.1'
 ```
 # How to use
 
