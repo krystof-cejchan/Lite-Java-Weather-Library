@@ -21,7 +21,6 @@ import java.util.*;
  * {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.WeatherForecast} for today
  *
  * @author krystof-cejchan
- * @version 17
  */
 public final class Today implements IForecastDayTimesAndDays {
 

@@ -1,9 +1,9 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects;
 
-import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.current_weather.CurrentCondition;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.WeatherForecast;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea;
@@ -18,7 +18,6 @@ import java.util.Arrays;
  * to another even more detailed objects or class fields
  *
  * @author krystof-cejchan
- * @version 17
  */
 public final class WeatherObject {
     private final DAY[] days;

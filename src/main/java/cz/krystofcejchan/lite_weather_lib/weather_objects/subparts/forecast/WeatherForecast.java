@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
  * see {@link TIME}, {@link DAY}<br>
  *
  * @author krystof-cejchan
- * @version 17
  */
 public class WeatherForecast {
 
@@ -68,13 +67,20 @@ public class WeatherForecast {
         this.days = dayList.toArray(new DAY[0]);
         for (DAY day : dayList) {
             switch (day) {
-                case TODAY -> todayHelper = new Today(location, timesBackToArray);
-                case TOMORROW -> tomorrowHelper = new Tomorrow(location, timesBackToArray);
-                case AFTER_TOMORROW -> tomorrowAfterHelper = new AfterTomorrow(location, timesBackToArray);
-                case ALL -> {
+                case TODAY:
+                    todayHelper = new Today(location, timesBackToArray);
+                    break;
+                case TOMORROW:
+                    tomorrowHelper = new Tomorrow(location, timesBackToArray);
+                    break;
+                case AFTER_TOMORROW:
+                    tomorrowAfterHelper = new AfterTomorrow(location, timesBackToArray);
+                    break;
+                case ALL: {
                     todayHelper = new Today(location, timesBackToArray);
                     tomorrowHelper = new Tomorrow(location, timesBackToArray);
                     tomorrowAfterHelper = new AfterTomorrow(location, timesBackToArray);
+                    break;
                 }
             }
         }
@@ -121,9 +127,18 @@ public class WeatherForecast {
         Map<DAY, Map<TIME, ForecastAtHour>> returnMap = new HashMap<>();
         for (DAY day : days) {
             switch (day) {
-                case TODAY -> returnMap.put(day, getToday().getAllForecastsForToday());
-                case TOMORROW -> returnMap.put(day, getTomorrow().getAllForecastsForToday());
-                case AFTER_TOMORROW -> returnMap.put(day, getTomorrowAfter().getAllForecastsForToday());
+                case TODAY:
+                    returnMap.put(day, getToday().getAllForecastsForToday());
+                    break;
+                case TOMORROW:
+                    returnMap.put(day, getTomorrow().getAllForecastsForToday());
+                    break;
+                case AFTER_TOMORROW:
+                    returnMap.put(day, getTomorrowAfter().getAllForecastsForToday());
+                    break;
+                case ALL:
+                    break;
+
             }
         }
         return returnMap;
@@ -175,8 +190,8 @@ public class WeatherForecast {
     public TIME[] getTimes() {
         return times;
     }
+
     /**
-     *
      * @return location provided in the constructor of this class or its parent class <br>
      * if you need to get more detailed information, use {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea}
      */

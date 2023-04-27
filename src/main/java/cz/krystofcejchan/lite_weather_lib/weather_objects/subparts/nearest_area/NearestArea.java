@@ -1,7 +1,7 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area;
 
-import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.details.AreaInfo;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +11,6 @@ import org.json.JSONObject;
  * Information about the area where the weather measurement was performed
  *
  * @author krystof-cejchan
- * @version 17
  */
 public final class NearestArea {
     private final String country;

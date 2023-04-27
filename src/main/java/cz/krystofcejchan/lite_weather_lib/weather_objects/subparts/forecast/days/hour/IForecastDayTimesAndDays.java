@@ -1,10 +1,10 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour;
 
-import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.DAY;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.enums.TIME;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CannotSearchForAll;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.NoDataFoundForThisDayAndTime;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -14,7 +14,6 @@ import java.util.List;
  * {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.Tomorrow} and {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.AfterTomorrow}
  *
  * @author krystof-cejchan
- * @version 17
  */
 public interface IForecastDayTimesAndDays {
     /**

@@ -11,6 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -18,7 +19,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -153,14 +153,9 @@ public class UtilityClass {
          */
         public static String getTextFromWebpage(@NotNull String webUrl) {
             try {
-                if (!WebPageReader.isLink(webUrl)) return null;
-                Scanner sc = new Scanner(new URL(webUrl).openStream());
-                StringBuilder sb = new StringBuilder();
-                while (sc.hasNext()) {
-                    sb.append(sc.next());
-                }
-                sc.close();
-                return sb.toString().replaceAll("<[^>]*>", "");
+                if (!isLink(webUrl)) return null;
+                webUrl = webUrl.replace(" ", "%20");
+                return IOUtils.toString(URI.create(webUrl), StandardCharsets.UTF_8);
             } catch (IOException e) {
                 throw new WeatherDataNotAccessible("Weather data could not be accessed; try again later");
             }

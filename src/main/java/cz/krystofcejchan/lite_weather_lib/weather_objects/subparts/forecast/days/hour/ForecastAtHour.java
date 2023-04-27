@@ -10,7 +10,6 @@ import org.json.JSONObject;
  * Forecast for specific day and hour/time
  *
  * @author krystof-cejchan
- * @version 17
  */
 public final class ForecastAtHour {
     private final DAY day;

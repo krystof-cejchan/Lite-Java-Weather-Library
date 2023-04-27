@@ -2,7 +2,6 @@ package cz.krystofcejchan.lite_weather_lib.enums_exception.enums;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -64,17 +63,27 @@ public enum TIME {
      * @return its index
      */
     public static int getIndex(TIME time) {
-        return switch (time) {
-            case PM_12 -> 0;
-            case AM_3 -> 1;
-            case AM_6 -> 2;
-            case AM_9 -> 3;
-            case AM_12 -> 4;
-            case PM_3 -> 5;
-            case PM_6 -> 6;
-            case PM_9 -> 7;
-            case ALL -> -1;
-        };
+        switch (time) {
+            case PM_12:
+                return 0;
+            case AM_3:
+                return 1;
+            case AM_6:
+                return 2;
+            case AM_9:
+                return 3;
+            case AM_12:
+                return 4;
+            case PM_3:
+                return 5;
+            case PM_6:
+                return 6;
+            case PM_9:
+                return 7;
+            case ALL:
+                return -1;
+        }
+        return -1;
     }
 
     /**
