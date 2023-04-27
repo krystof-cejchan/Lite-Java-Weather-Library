@@ -1,7 +1,7 @@
 package cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.request;
 
-import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFindLocation;
+import cz.krystofcejchan.lite_weather_lib.utilities.UtilityClass;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
 import org.json.JSONObject;
 
@@ -9,7 +9,6 @@ import org.json.JSONObject;
  * request data
  *
  * @author krystof-cejchan
- * @version 17
  */
 public final class Request {
     private final String query;

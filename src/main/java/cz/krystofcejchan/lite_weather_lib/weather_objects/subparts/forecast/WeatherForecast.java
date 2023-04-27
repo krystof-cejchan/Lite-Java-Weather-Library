@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
  * see {@link TIME}, {@link DAY}<br>
  *
  * @author krystof-cejchan
- * @version 17
  */
 public class WeatherForecast {
 

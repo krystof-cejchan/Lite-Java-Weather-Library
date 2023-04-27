@@ -7,7 +7,6 @@ import cz.krystofcejchan.lite_weather_lib.weather_objects.MethodRefPrint;
  * more info for {@link cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.nearest_area.NearestArea}
  *
  * @author krystof-cejchan
- * @version 17
  */
 public class AreaInfo {
     final private String name, latitude, longitude, population, region;

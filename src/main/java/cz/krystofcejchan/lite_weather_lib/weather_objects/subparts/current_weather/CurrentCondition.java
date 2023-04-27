@@ -14,7 +14,6 @@ import java.util.Locale;
  * Current weather / the latest weather data
  *
  * @author krystof-cejchan
- * @version 17
  */
 public final class CurrentCondition {
 

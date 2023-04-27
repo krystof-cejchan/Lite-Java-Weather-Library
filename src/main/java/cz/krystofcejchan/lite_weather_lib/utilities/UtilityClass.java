@@ -153,7 +153,7 @@ public class UtilityClass {
          */
         public static String getTextFromWebpage(@NotNull String webUrl) {
             try {
-                if (!WebPageReader.isLink(webUrl)) return null;
+                if (!isLink(webUrl)) return null;
                 webUrl = webUrl.replace(" ", "%20");
                 return IOUtils.toString(URI.create(webUrl), StandardCharsets.UTF_8);
             } catch (IOException e) {
