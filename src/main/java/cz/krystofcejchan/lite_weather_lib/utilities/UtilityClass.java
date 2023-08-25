@@ -6,6 +6,7 @@ import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.CouldNotFin
 import cz.krystofcejchan.lite_weather_lib.enums_exception.exceptions.WeatherDataNotAccessible;
 import cz.krystofcejchan.lite_weather_lib.weather_objects.subparts.forecast.days.hour.ForecastAtHour;
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -109,8 +111,10 @@ public class UtilityClass {
          */
         private static final List<ForecastAtHour> listOfAllDaysAndItsTimes = new ArrayList<>();
 
+        @NotNull
+        @Contract(" -> new")
         public static List<ForecastAtHour> getListOfAllDaysAndItsTimes() {
-            return listOfAllDaysAndItsTimes;
+            return new ArrayList<>(listOfAllDaysAndItsTimes);
         }
 
         public static void addToListOfAllDaysAndItsTimes(@NotNull ForecastAtHour forecast) {
