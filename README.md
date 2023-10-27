@@ -32,20 +32,20 @@ A Java Library for better and easier worldwide Weather data including current co
 * [JavaDoc](https://krystofcejchan.cz/projects/documentations/Lite-Java-Weather-Library/index.html)
 
 **Requirements**
-1) Java: 15
+1) Java: 11
 2) Internet connection
 ## Apache Maven
 ```xml
 <dependency>
   <groupId>cz.krystofcejchan</groupId>
   <artifactId>lite_weather_library</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.3</version>
 </dependency>
 ```
 
 ## Gradle Groovy DSL
 ```groovy
-implementation 'cz.krystofcejchan:lite_weather_library:1.1.0'
+implementation 'cz.krystofcejchan:lite_weather_library:1.1.3'
 ```
 # How to use
 
