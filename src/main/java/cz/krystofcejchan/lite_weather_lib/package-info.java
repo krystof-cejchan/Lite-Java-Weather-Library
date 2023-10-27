@@ -1,5 +1,5 @@
 /**
- * Main project package
+ * _ project package
  *
  * @author krystof-cejchan
 

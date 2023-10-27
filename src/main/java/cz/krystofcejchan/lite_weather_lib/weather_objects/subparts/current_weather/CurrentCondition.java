@@ -61,7 +61,7 @@ public final class CurrentCondition {
      */
     public CurrentCondition(@NotNull String location) throws CouldNotFindLocation {
         this.location = location;
-        //main json object for current condition
+        //Main json object for current condition
         JSONObject current_condition = UtilityClass.getJson(location).getJSONArray("current_condition").getJSONObject(0);
 
 
@@ -163,7 +163,7 @@ public final class CurrentCondition {
 
     /**
      * Precipitation is any liquid or frozen water that forms in the atmosphere and falls to the Earth.<br>
-     * It is one of the three main steps of the global water cycle.<br><br>
+     * It is one of the three Main steps of the global water cycle.<br><br>
      * * <a href="https://education.nationalgeographic.org/resource/precipitation"><i>source</i></a>
      *
      * @return precipitation in inches
@@ -174,7 +174,7 @@ public final class CurrentCondition {
 
     /**
      * Precipitation is any liquid or frozen water that forms in the atmosphere and falls to the Earth.<br>
-     * It is one of the three main steps of the global water cycle.<br><br>
+     * It is one of the three Main steps of the global water cycle.<br><br>
      * * <a href="https://education.nationalgeographic.org/resource/precipitation"><i>source</i></a>
      *
      * @return precipitation in millimeters
