@@ -6,7 +6,7 @@
 
     <groupId>cz.krystofcejchan</groupId>
     <artifactId>lite_weather_library</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.4.1</version>
     <name>Lite Java Weather Library</name>
     <description>A Java Library for better and easier worldwide Weather data including current condition, forecast,
         location info etc.
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.1-jre</version>
+            <version>[32.0.0,)</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -72,13 +72,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.9.0</version>
+            <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>23.0.0</version>
+            <version>24.0.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.4.1</version>
+            <version>3.5.0</version>
         </dependency>
     </dependencies>
 
